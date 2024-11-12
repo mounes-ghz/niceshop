@@ -1,0 +1,7 @@
+{
+    "name": "Compare",
+    "alias": "compare",
+    "description": "The NiceShop Compare Module.",
+    "priority": 100,
+    "providers": ["Modules\\Compare\\Providers\\CompareServiceProvider"]
+}

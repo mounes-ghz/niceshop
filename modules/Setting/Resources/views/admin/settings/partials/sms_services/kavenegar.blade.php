@@ -1,0 +1,5 @@
+{{ Form::text('kavenegar_api_key', trans('setting::attributes.kavenegar_api_key'), $errors, $settings, ['required' => true]) }}
+{{ Form::text('kavenegar_new_order_admin_sms_pattern', trans('setting::attributes.kavenegar_new_order_admin_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.kavenegar_new_order_admin_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('kavenegar_welcome_sms_pattern', trans('setting::attributes.kavenegar_welcome_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.kavenegar_welcome_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('kavenegar_new_order_sms_pattern', trans('setting::attributes.kavenegar_new_order_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.kavenegar_new_order_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('kavenegar_sms_order_statuses_pattern', trans('setting::attributes.kavenegar_sms_order_statuses_pattern'), $errors, $settings, ['help' => trans('sms::messages.kavenegar_sms_order_statuses_sample', ['store_name' => setting('store_name')])]) }}

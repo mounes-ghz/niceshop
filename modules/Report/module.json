@@ -1,0 +1,7 @@
+{
+    "name": "Report",
+    "alias": "report",
+    "description": "The NiceShop Report Module.",
+    "priority": 100,
+    "providers": ["Modules\\Report\\Providers\\ReportServiceProvider"]
+}

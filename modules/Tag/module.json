@@ -1,0 +1,7 @@
+{
+    "name": "Tag",
+    "alias": "tag",
+    "description": "The NiceShop Tag Module.",
+    "priority": 100,
+    "providers": ["Modules\\Tag\\Providers\\TagServiceProvider"]
+}

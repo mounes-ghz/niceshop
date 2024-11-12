@@ -1,0 +1,27 @@
+{
+    "name": "niceshop/media",
+    "description": "The NiceShop Media Module.",
+    "authors": [
+        {
+            "name": "Codenevis",
+            "email": "info@codenevis.net"
+        }
+    ],
+    "require": {
+        "php": "^8.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Media\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}

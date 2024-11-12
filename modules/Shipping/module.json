@@ -1,0 +1,7 @@
+{
+    "name": "Shipping",
+    "alias": "shipping",
+    "description": "The NiceShop Shipping Module.",
+    "priority": 100,
+    "providers": ["Modules\\Shipping\\Providers\\ShippingServiceProvider"]
+}

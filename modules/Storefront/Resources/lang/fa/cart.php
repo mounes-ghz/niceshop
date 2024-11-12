@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'cart' => 'سبد خرید',
+    'my_cart' => 'سبد خرید',
+    '01' => '۰۱',
+    '02' => '۰۲',
+    '03' => '۰۳',
+    'checkout' => 'تسویه حساب',
+    'order_complete' => 'سفارش کامل شد',
+    'table' => [
+        'image' => 'تصویر',
+        'product_name' => 'نام محصول',
+        'unit_price' => 'قیمت واحد',
+        'quantity' => 'تعداد',
+        'line_total' => 'جمع کل',
+        'unit_price:' => 'قیمت واحد:',
+        'quantity:' => 'تعداد:',
+        'line_total:' => 'جمع کل:',
+    ],
+    'enter_coupon_code' => 'کد تخفیف را وارد کنید',
+    'apply' => 'اعمال',
+    'order_summary' => 'خلاصه سفارش',
+    'subtotal' => 'جمع',
+    'free' => 'رایگان',
+    'coupon' => 'کوپن',
+    'shipping_cost' => 'هزینه حمل و نقل',
+    'total' => 'قابل پرداخت',
+    'proceed_to_checkout' => 'ادامه به تسویه حساب',
+    'your_cart_is_empty' => 'سبد خرید شما خالی است',
+    'looks_like_you_haven\'t_made_any_choice_yet' => 'به نظر می‌رسد هنوز هیچ انتخابی نکرده‌اید.',
+    'continue_shopping' => 'ادامه خرید',
+];

@@ -1,0 +1,5 @@
+{{ Form::text('ippanel_api_key', trans('setting::attributes.ippanel_api_key'), $errors, $settings, ['required' => true]) }}
+{{ Form::text('ippanel_new_order_admin_sms_pattern', trans('setting::attributes.ippanel_new_order_admin_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.ippanel_new_order_admin_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('ippanel_welcome_sms_pattern', trans('setting::attributes.ippanel_welcome_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.ippanel_welcome_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('ippanel_new_order_sms_pattern', trans('setting::attributes.ippanel_new_order_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.ippanel_new_order_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('ippanel_sms_order_statuses_pattern', trans('setting::attributes.ippanel_sms_order_statuses_pattern'), $errors, $settings, ['help' => trans('sms::messages.ippanel_sms_order_statuses_sample', ['store_name' => setting('store_name')])]) }}

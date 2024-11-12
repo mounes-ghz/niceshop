@@ -1,0 +1,6 @@
+{{ Form::text('melipayamak_username', trans('setting::attributes.melipayamak_username'), $errors, $settings, ['required' => true]) }}
+{{ Form::text('melipayamak_password', trans('setting::attributes.melipayamak_password'), $errors, $settings, ['required' => true]) }}
+{{ Form::text('melipayamak_new_order_admin_sms_pattern', trans('setting::attributes.melipayamak_new_order_admin_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.melipayamak_new_order_admin_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('melipayamak_welcome_sms_pattern', trans('setting::attributes.melipayamak_welcome_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.melipayamak_welcome_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('melipayamak_new_order_sms_pattern', trans('setting::attributes.melipayamak_new_order_sms_pattern'), $errors, $settings, ['help' => trans('sms::messages.melipayamak_new_order_sms_sample', ['store_name' => setting('store_name')])]) }}
+{{ Form::text('melipayamak_sms_order_statuses_pattern', trans('setting::attributes.melipayamak_sms_order_statuses_pattern'), $errors, $settings, ['help' => trans('sms::messages.melipayamak_sms_order_statuses_sample', ['store_name' => setting('store_name')])]) }}

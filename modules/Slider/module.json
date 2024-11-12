@@ -1,0 +1,7 @@
+{
+    "name": "Slider",
+    "alias": "slider",
+    "description": "The NiceShop Slider Module.",
+    "priority": 100,
+    "providers": ["Modules\\Slider\\Providers\\SliderServiceProvider"]
+}

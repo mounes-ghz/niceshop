@@ -1,0 +1,21 @@
+{
+    "name": "niceshop/blog",
+    "description": "",
+    "authors": [
+        {
+            "name": "Codenevis",
+            "email": "info@codenevis.net"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Blog\\": ""
+        }
+    }
+}

@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'Attribute'   => 'ویژگی',
+    'Brand'       => 'برند',
+    'Category'    => 'دسته بندی',
+    'Coupon'      => 'تخفیف',
+    'Currency'    => 'ارز',
+    'FlashSale'   => 'فروش فوری',
+    'Import'      => 'درون‌ریزی',
+    'Media'       => 'رسانه',
+    'Menu'        => 'منو',
+    'Option'      => 'گزینه',
+    'Order'       => 'سفارش',
+    'Page'        => 'صفحه',
+    'Product'     => 'محصول',
+    'Report'      => 'گزارش',
+    'Review'      => 'نظر',
+    'Setting'     => 'تنظیمات',
+    'Slider'      => 'اسلایدر',
+    'Tag'         => 'برچسب',
+    'Tax'         => 'مالیات',
+    'Transaction' => 'تراکنش',
+    'Translation' => 'ترجمه',
+    'User'        => 'کاربر',
+    'Variation'   => 'تنوع',
+    'Storefront'  => 'ویترین',
+];

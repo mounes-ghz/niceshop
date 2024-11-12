@@ -1,0 +1,27 @@
+{
+    "name": "niceshop/tag",
+    "description": "The NiceShop Tag Module.",
+    "authors": [
+        {
+            "name": "Codenevis",
+            "email": "info@codenevis.net"
+        }
+    ],
+    "require": {
+        "php": "^8.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Tag\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}

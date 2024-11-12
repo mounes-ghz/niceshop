@@ -1,0 +1,119 @@
+@import url("@admin/fonts/vazirmatn/font.css");
+
+.breadcrumb ul > li:after {
+    transform: rotate(180deg);
+}
+
+.my-orders-table .btn-view,
+.my-downloads-table .btn-download,
+.my-wishlist-table .btn-delete {
+    letter-spacing: normal;
+}
+
+.ltr {
+    direction: ltr;
+}
+
+.custom-page-content p {
+    line-height: 30px;
+}
+
+.description p {
+    line-height: 31px;
+}
+
+.product-details-info .product-name {
+    line-height: 40px;
+}
+
+table {
+    line-height: 1.8;
+}
+
+body {
+    line-height: 1.8;
+}
+
+.footer {
+    line-height: 1.5;
+}
+
+.countdown .countdown-row {
+    flex-direction: row-reverse;
+}
+
+.rtl
+    .daily-deals
+    .daily-deals-countdown.countdown
+    .countdown-section:last-child {
+    margin-left: 15px;
+}
+
+.rtl
+    .daily-deals
+    .daily-deals-countdown.countdown
+    .countdown-section:first-child {
+    margin-left: 0;
+}
+
+.contact-info li a {
+    direction: ltr;
+}
+
+.store-phone {
+    direction: rtl !important;
+}
+
+.nice-select .option {
+    text-align: left;
+}
+
+.rtl .nice-select.right .list {
+    left: 0;
+    right: auto;
+}
+
+.rtl .nice-select .list {
+    left: unset;
+    right: 0;
+}
+
+.product-details-bottom #description table {
+    border-collapse: collapse;
+    padding: 10px;
+    border: 2px solid #0068e1;
+}
+
+.product-details-bottom #description table th,
+.product-details-bottom #description table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.product-details-bottom #description table th {
+    background-color: #0068e1;
+    color: white;
+}
+
+.product-details-bottom #description table th,
+.product-details-bottom #description table td:first-child {
+    background-color: #0068e1;
+    color: #fff;
+}
+
+.product-details-bottom #description table td:first-child strong {
+    color: #fff !important;
+}
+
+.product-details-bottom #description table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.product-details-bottom #description table tr:hover {
+    background-color: #ddd;
+}
+
+.rtl .page-item .page-link,
+.input-number {
+    font-feature-settings: "ss01", "tnum";
+}
