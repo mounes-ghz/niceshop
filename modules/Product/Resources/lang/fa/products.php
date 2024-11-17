@@ -6,6 +6,10 @@ return [
     'save' => 'ذخیره',
     'save_and_exit' => 'ذخیره و خروج',
     'save_and_edit' => 'ذخیره و ویرایش',
+    'upload_excel' => 'آپلود اکسل',
+    'choose_excel_file' => 'انتخاب فایل اکسل',
+    'upload' => 'آپلود',
+    'cancel' => 'لغو',
 
     'section' => [
         'expand_all' => 'گسترش همه',
@@ -182,4 +186,6 @@ return [
             'select_template' => 'انتخاب قالب',
         ],
     ],
+
+
 ];

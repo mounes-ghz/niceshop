@@ -18,7 +18,10 @@ export default class {
         this.setDefaultActiveAccordionTabQueryParam();
         this.stopDropdownPropagation();
         this.fullscreenMode();
+        this.chooseExcelFile = this.chooseExcelFile.bind(this);
+        this.uploadExcelFile = this.uploadExcelFile.bind(this);
     }
+
 
     fullscreenMode() {
         $(".fullscreen-mode-open").on("click", (e) => {
@@ -59,6 +62,8 @@ export default class {
             e.stopPropagation();
         });
     }
+
+
 
     selectize() {
         let selects = $("select.selectize").removeClass(
@@ -254,6 +259,37 @@ export default class {
             .on("click", (e) => {
                 $(e.currentTarget).tooltip("hide");
             });
+    }
+
+    chooseExcelFile() {
+        let picker = new MediaPicker(); // استفاده از MediaPicker برای انتخاب فایل
+
+        picker.on("select", ({ id, filename }) => {
+            this.excelFile = { id, filename };
+            alert("فایل اکسل با موفقیت انتخاب شد.");
+        });
+    }
+
+    async uploadExcelFile() {
+        if (!this.excelFile) {
+            alert("لطفاً ابتدا فایل اکسل را انتخاب کنید.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("excel_file_id", this.excelFile.id); // ارسال ID فایل به سرور
+
+        try {
+            const response = await axios.post('/products/import-from-excel', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            alert(response.data.message || "فایل اکسل با موفقیت آپلود شد.");
+        } catch (error) {
+            console.error(error);
+            alert("مشکلی در آپلود فایل اکسل به وجود آمد.");
+        }
     }
 
     shortcuts() {

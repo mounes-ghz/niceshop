@@ -3,10 +3,19 @@
         <div class="btn-group pull-right">
             @if (isset($buttons, $name))
                 @foreach ($buttons as $view)
-                    <a href="{{ route("admin.{$resource}.{$view}") }}" class="btn btn-primary btn-actions btn-{{ $view }}">
-                        {{ trans("admin::resource.{$view}", ['resource' => $name]) }}
-                    </a>
+                    @if ($view === 'upload_excel')
+                        <button type="button" class="btn btn-primary btn-actions btn-upload-excel" data-toggle="modal" data-target="#uploadExcelModal">
+                            {{ trans('product::products.upload_excel') }}
+                        </button>
+                    @else
+                        <a href="{{ route("admin.{$resource}.{$view}") }}" class="btn btn-primary btn-actions btn-{{ $view }}">
+                            {{ trans("admin::resource.{$view}", ['resource' => $name]) }}
+                        </a>
+                    @endif
+
+
                 @endforeach
+
             @else
                 {{ $buttons ?? '' }}
             @endif

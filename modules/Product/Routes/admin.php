@@ -46,8 +46,10 @@ Route::get('products/index/table', [
     'uses' => 'ProductController@table',
     'middleware' => 'can:admin.products.index',
 ]);
-Route::post('products/upload-excel', [
-    'as' => 'admin.products.upload_excel',
-    'uses' => 'ProductController@uploadExcel',
-    'middleware' => 'can:admin.products.create', // دسترسی به این روت را محدود کنید
+Route::post('products/import-from-excel', [
+    'as' => 'admin.products.import_from_excel',
+    'uses' => 'ProductController@importFromExcel',
+    'middleware' => 'can:admin.products.create',
 ]);
+
+

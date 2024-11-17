@@ -12,6 +12,8 @@ use Modules\Admin\Traits\HasCrudActions;
 use Modules\Product\Http\Requests\SaveProductRequest;
 use Modules\Product\Transformers\ProductEditResource;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use NiceShop\Imports\ProductsImport;
 
 
 class ProductController
@@ -103,6 +105,19 @@ class ProductController
         );
     }
 
+    public function importFromExcel(Request $request)
+    {
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        $file = $request->file('excel_file');
+
+        Excel::import(new ProductsImport, $file->getPathName());
+
+        return response()->json(['message' => 'فایل اکسل با موفقیت پردازش شد.'], 200);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -144,15 +159,5 @@ class ProductController
         }
     }
 
-    public function uploadExcel(Request $request)
-    {
-        $request->validate([
-            'excel_file' => 'required|file|mimes:xlsx,xls',
-        ]);
 
-        Excel::import(new ProductsImport, $request->file('excel_file')); // فرض بر اینکه کلاس ایمپورت به نام ProductsImport دارید.
-
-        return redirect()->route('admin.products.index')
-            ->with('success', trans('product::products.upload_success'));
-    }
 }
