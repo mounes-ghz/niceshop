@@ -13,7 +13,7 @@
 #Dependencies
 node_modules/
 /vendor
-git add -f public/storage/media
+
 
 #Assets
 public/build/
