@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between">
                 <div class="top-nav-left d-none d-lg-block">
 {{--                    <span>{{ setting('storefront_welcome_text') }}</span>--}}
-                    <span>به پویالند خوش آمدید</span>--}}
+                    <span>به پویالند خوش آمدید</span>
                 </div>
 
                 <div class="top-nav-right">
