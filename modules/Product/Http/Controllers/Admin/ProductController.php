@@ -62,6 +62,7 @@ class ProductController
             $this->getRequest('store')->all()
         );
 
+        dd($entity);
         $this->searchable($entity);
 
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
@@ -115,7 +116,9 @@ class ProductController
 
         Excel::import(new ProductsImport, $file->getPathName());
 
-        return response()->json(['message' => 'فایل اکسل با موفقیت پردازش شد.'], 200);
+        $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
+        return redirect()->route("{$this->getRoutePrefix()}.index")
+            ->withSuccess($message);
     }
 
 
