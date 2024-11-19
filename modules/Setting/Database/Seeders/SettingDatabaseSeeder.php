@@ -28,7 +28,7 @@ class SettingDatabaseSeeder extends Seeder
                 'key' => 'storefront_welcome_text',
                 'is_translatable' => 1,
                 'plain_value' => NULL,
-                'value' => 's:38:"به نایس شاپ خوش آمدید";',
+                'value' => 's:38:"به پویالند خوش آمدید";',
             ],
             2 => [
                 'id' => 202,
