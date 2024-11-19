@@ -3,11 +3,12 @@
         <div class="top-nav">
             <div class="d-flex justify-content-between">
                 <div class="top-nav-left d-none d-lg-block">
-                    <span>{{ setting('storefront_welcome_text') }}</span>
+{{--                    <span>{{ setting('storefront_welcome_text') }}</span>--}}
+                    <span>به پویالند خوش آمدید</span>--}}
                 </div>
 
                 <div class="top-nav-right">
-                    <ul class="list-inline top-nav-right-list"> 
+                    <ul class="list-inline top-nav-right-list">
                         <li>
                             <a href="{{ route('contact.create') }}">
                                 <i class="las la-envelope"></i>
