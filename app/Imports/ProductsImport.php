@@ -28,10 +28,10 @@ class ProductsImport implements ToModel,WithHeadingRow
         }
 
         // در صورت نیاز دانلودها را نیز مدیریت کنید
-        if (!empty($row['downloads'])) {
-            $downloads = explode(',', $row['downloads']);
-            $product->downloads()->sync($downloads);
-        }
+//        if (!empty($row['downloads'])) {
+//            $downloads = explode(',', $row['downloads']);
+//            $product->downloads()->sync($downloads);
+//        }
 
         return $product;
     }
