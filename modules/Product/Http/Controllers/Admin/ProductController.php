@@ -112,24 +112,21 @@ class ProductController
             'excel_file' => 'required|file|mimes:xlsx,xls',
         ]);
 
-        // گرفتن فایل آپلود شده
         $file = $request->file('excel_file');
 
-        // ذخیره فایل در مسیر `storage/uploads` با اضافه کردن پسوند `.xlsx`
-        $fileName = $file->getClientOriginalName(); // نام اصلی فایل
-        $filePath = $file->storeAs('uploads', $fileName . '.xlsx');
+        // ذخیره فایل در دایرکتوری uploads
+        $filePath = $file->storeAs('uploads', $file->getClientOriginalName());
 
-        // مسیر کامل فایل ذخیره شده
-        $fullPath = storage_path('app/' . $filePath);
+        // بررسی مسیر فایل
+        dd(storage_path('app/' . $filePath));
 
-        // ایمپورت فایل
-        Excel::import(new ProductsImport, $fullPath);
+        Excel::import(new ProductsImport, storage_path('app/' . $filePath));
 
-        // بازگشت به لیست با پیام موفقیت
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
         return redirect()->route("{$this->getRoutePrefix()}.index")
             ->withSuccess($message);
     }
+
 
 
     /**
