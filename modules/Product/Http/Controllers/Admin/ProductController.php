@@ -5,6 +5,7 @@ namespace Modules\Product\Http\Controllers\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 use Modules\Product\Entities\Product;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -112,9 +113,16 @@ class ProductController
             'excel_file' => 'required|file|mimes:xlsx,xls',
         ]);
 
+        // ذخیره فایل در public/storage/uploads
         $file = $request->file('excel_file');
+        $path = $file->storeAs('uploads', $file->getClientOriginalName(), 'public');
+        $fullPath = public_path('storage/uploads/' . $file->getClientOriginalName());
 
-        Excel::import(new ProductsImport, $file->getPathName());
+        // بررسی مسیر کامل فایل
+        Log::info($fullPath);
+
+        // ایمپورت فایل اکسل
+        Excel::import(new ProductsImport, $fullPath);
 
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
         return redirect()->route("{$this->getRoutePrefix()}.index")
