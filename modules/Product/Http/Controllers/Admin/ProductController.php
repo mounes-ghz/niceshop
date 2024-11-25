@@ -112,19 +112,17 @@ class ProductController
             'excel_file' => 'required|file|mimes:xlsx,xls',
         ]);
 
-        // ذخیره فایل در مسیر مشخص
         $file = $request->file('excel_file');
-        $filePath = $file->storeAs('uploads', $file->getClientOriginalName());
 
-        // مسیر کامل فایل ذخیره‌شده
-        $fullPath = storage_path('app/' . $filePath);
+// ذخیره فایل در مسیر storage/app/uploads
+        $path = $file->storeAs('uploads', $file->getClientOriginalName());
+        $fullPath = storage_path('app/' . $path);
 
-        // استفاده از Excel برای خواندن فایل
+// ایمپورت فایل اکسل
         Excel::import(new ProductsImport, $fullPath);
 
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
-        return redirect()->route("{$this->getRoutePrefix()}.index")
-            ->withSuccess($message);
+        return redirect()->route("{$this->getRoutePrefix()}.index")->withSuccess($message);
     }
 
 
