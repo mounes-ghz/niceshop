@@ -111,7 +111,7 @@ class ProductController
         $request->validate([
             'excel_file' => 'required|file|mimes:xlsx,xls',
         ]);
-        dd($request->file('excel_file'));
+
         $file = $request->file('excel_file');
 
         Excel::import(new ProductsImport, $file->getPathName());
