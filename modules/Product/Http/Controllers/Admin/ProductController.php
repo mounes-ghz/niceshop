@@ -5,6 +5,7 @@ namespace Modules\Product\Http\Controllers\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 use Modules\Product\Entities\Product;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -117,6 +118,8 @@ class ProductController
 // ذخیره فایل در مسیر storage/app/uploads
         $path = $file->storeAs('uploads', $file->getClientOriginalName());
         $fullPath = storage_path('app/' . $path);
+        Log::info($fullPath);
+
 
 // ایمپورت فایل اکسل
         Excel::import(new ProductsImport, $fullPath);
