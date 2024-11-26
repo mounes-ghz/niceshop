@@ -5,6 +5,7 @@ namespace NiceShop\Imports;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Modules\Brand\Entities\Brand;
+use Modules\Category\Entities\Category;
 use Modules\Product\Entities\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
 
@@ -38,9 +39,23 @@ class ProductsImport implements ToModel,WithHeadingRow
             ]);
 
             if (!empty($row['categories'])) {
+                // تقسیم دسته‌بندی‌ها بر اساس ویرگول یا جداکننده
                 $categories = explode(',', $row['categories']);
-                $product->categories()->sync($categories);
+
+                // تبدیل دسته‌بندی‌ها به آرایه‌ای از اعداد صحیح
+                $categories = array_map('intval', $categories);
+
+                // بررسی وجود دسته‌بندی‌ها در پایگاه داده
+                $existingCategories = Category::whereIn('id', $categories)->pluck('id')->toArray();
+
+                if (!empty($existingCategories)) {
+                    $product->categories()->sync($existingCategories);
+                    Log::info("Categories synced: ", $existingCategories);
+                } else {
+                    Log::warning("No valid categories found for product: ", $categories);
+                }
             }
+
 
             return $product;
         } catch (\Exception $e) {
