@@ -56,7 +56,7 @@ class ProductsImport implements ToModel,WithHeadingRow
                 }
             }
 
-
+Log::info($product);
             return $product;
         } catch (\Exception $e) {
             Log::error("Error processing row: " . $e->getMessage(), $row);
