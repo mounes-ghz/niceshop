@@ -117,12 +117,10 @@ class ProductController
         $path = $file->move(public_path('uploads'), $file->getClientOriginalName());
         $fullPath = storage_path('app/' . $path);
 
-        if (file_exists($fullPath)) {
+
             Log::info("File saved at public/uploads: " . $path->getPathname());
             Log::info("File successfully saved at: " . $fullPath);
-        } else {
-            Log::error("Failed to save file at: " . $fullPath);
-        }
+
 
 
         Excel::import(new ProductsImport, $fullPath);
