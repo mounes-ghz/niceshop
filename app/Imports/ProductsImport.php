@@ -2,6 +2,7 @@
 
 namespace NiceShop\Imports;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Modules\Brand\Entities\Brand;
@@ -13,7 +14,7 @@ class ProductsImport implements ToModel,WithHeadingRow
 {
     public function model(array $row)
     {
-        try {
+
             if (empty($row['name']) || empty($row['brand_id']) || !is_numeric($row['brand_id'])) {
                 return null;
             }
@@ -37,14 +38,26 @@ class ProductsImport implements ToModel,WithHeadingRow
             ]);
 
             $categories = explode(',', $row['categories']);
-            $product->categories()->sync($categories);
+            Log::info('Categories for manual insertion:', $categories);
 
-Log::info($product->categories);
-            return $product;
+        DB::beginTransaction();
+
+        try {
+            foreach ($categories as $categoryId) {
+                DB::table('product_categories')->insert([
+                    'product_id' => $product->id,
+                    'category_id' => intval($categoryId),
+                ]);
+            }
+            DB::commit();
         } catch (\Exception $e) {
-            Log::error("Error processing row: " . $e->getMessage(), $row);
-            return null; // ادامه دادن به رکوردهای بعدی
+            DB::rollBack();
+            Log::error("Error inserting categories: " . $e->getMessage());
         }
+
+
+        return $product;
+
     }
 
 //    public function model(array $row)
