@@ -113,26 +113,19 @@ class ProductController
             'excel_file' => 'required|file|mimes:xlsx,xls',
         ]);
 
-        $file = $request->file('excel_file'); // گرفتن فایل از Request
-
-// ذخیره فایل در storage/app/uploads
-        $path = $file->storeAs('uploads', $file->getClientOriginalName());
-
-// ساخت مسیر کامل
+        $file = $request->file('excel_file');
+        $path = $file->move(public_path('uploads'), $file->getClientOriginalName());
         $fullPath = storage_path('app/' . $path);
 
-// ثبت مسیر در لاگ
-        Log::info('File stored at: ' . $fullPath);
-
-        if (!file_exists($fullPath)) {
-            Log::error("File not found: " . $fullPath);
-            abort(404, "File not found: " . $fullPath);
+        if (file_exists($fullPath)) {
+            Log::info("File saved at public/uploads: " . $path->getPathname());
+            Log::info("File successfully saved at: " . $fullPath);
         } else {
-            Log::info("File exists at: " . $fullPath);
-            Excel::import(new ProductsImport, $fullPath);
+            Log::error("Failed to save file at: " . $fullPath);
         }
 
 
+        Excel::import(new ProductsImport, $fullPath);
 
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
         return redirect()->route("{$this->getRoutePrefix()}.index")
