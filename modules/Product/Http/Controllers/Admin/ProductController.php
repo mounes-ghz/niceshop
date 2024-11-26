@@ -114,16 +114,19 @@ class ProductController
         ]);
 
         $file = $request->file('excel_file');
+
+// ذخیره فایل در public/uploads
         $path = $file->move(public_path('uploads'), $file->getClientOriginalName());
-        $fullPath = storage_path('app/' . $path);
 
+// مسیر کامل به فایل آپلود شده
+        $fullPath = public_path('uploads/' . $file->getClientOriginalName());
 
-            Log::info("File saved at public/uploads: " . $path->getPathname());
-            Log::info("File successfully saved at: " . $fullPath);
+// ثبت لاگ
+        Log::info("File saved at public/uploads: " . $fullPath);
 
-
-
+// ایمپورت فایل اکسل
         Excel::import(new ProductsImport, $fullPath);
+
 
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
         return redirect()->route("{$this->getRoutePrefix()}.index")
