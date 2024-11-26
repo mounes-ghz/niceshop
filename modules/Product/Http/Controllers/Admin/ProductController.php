@@ -107,6 +107,7 @@ class ProductController
             ]
         );
     }
+
     public function importFromExcel(Request $request)
     {
         $request->validate([
@@ -123,7 +124,6 @@ class ProductController
 
         $path = $file->move(public_path('uploads'), $uniqueFilename);
         $fullPath = public_path('uploads/' . $uniqueFilename);
-        Log::info("File saved at public/uploads: " . $fullPath);
         Excel::import(new ProductsImport, $fullPath);
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
         return redirect()->route("{$this->getRoutePrefix()}.index")
