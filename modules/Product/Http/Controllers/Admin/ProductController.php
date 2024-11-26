@@ -2,6 +2,7 @@
 
 namespace Modules\Product\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
@@ -106,7 +107,6 @@ class ProductController
             ]
         );
     }
-
     public function importFromExcel(Request $request)
     {
         $request->validate([
@@ -115,24 +115,20 @@ class ProductController
 
         $file = $request->file('excel_file');
 
-// ذخیره فایل در public/uploads
-        $path = $file->move(public_path('uploads'), $file->getClientOriginalName());
+        $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $file->getClientOriginalExtension();
+        $timestamp = Carbon::now()->format('Y_m_d_H_i_s');
+        $uniqueFilename = $filename . '_' . $timestamp . '.' . $extension;
 
-// مسیر کامل به فایل آپلود شده
-        $fullPath = public_path('uploads/' . $file->getClientOriginalName());
 
-// ثبت لاگ
+        $path = $file->move(public_path('uploads'), $uniqueFilename);
+        $fullPath = public_path('uploads/' . $uniqueFilename);
         Log::info("File saved at public/uploads: " . $fullPath);
-
-// ایمپورت فایل اکسل
         Excel::import(new ProductsImport, $fullPath);
-
-
         $message = trans('admin::messages.resource_created', ['resource' => $this->getLabel()]);
         return redirect()->route("{$this->getRoutePrefix()}.index")
             ->withSuccess($message);
     }
-
 
     /**
      * Update the specified resource in storage.

@@ -2,6 +2,7 @@
 
 namespace NiceShop\Imports;
 
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Modules\Product\Entities\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -10,6 +11,7 @@ class ProductsImport implements ToModel,WithHeadingRow
 {
     public function model(array $row)
     {
+        Log::info($row);
         $product = Product::create([
             'name' => $row['name'],
             'price' => intval($row['price']),
