@@ -14,8 +14,6 @@ class ProductsImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         try {
-            Log::info($row);
-
             if (empty($row['name']) || empty($row['brand_id']) || !is_numeric($row['brand_id'])) {
                 return null;
             }
@@ -41,7 +39,7 @@ class ProductsImport implements ToModel,WithHeadingRow
             $categories = explode(',', $row['categories']);
             $product->categories()->sync($categories);
 
-Log::info($product);
+Log::info($product->categories);
             return $product;
         } catch (\Exception $e) {
             Log::error("Error processing row: " . $e->getMessage(), $row);
