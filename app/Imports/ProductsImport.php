@@ -38,24 +38,8 @@ class ProductsImport implements ToModel,WithHeadingRow
                 'special_price'=>intval($row['price']),
             ]);
 
-            if (!empty($row['categories'])) {
-                // تقسیم دسته‌بندی‌ها بر اساس ویرگول یا جداکننده
-                $categories = explode(',', $row['categories']);
-
-                // تبدیل دسته‌بندی‌ها به آرایه‌ای از اعداد صحیح
-                $categories = array_map('intval', $categories);
-
-                // بررسی وجود دسته‌بندی‌ها در پایگاه داده
-                $existingCategories = Category::whereIn('id', $categories)->pluck('id')->toArray();
-
-                Log::info('cat'.$product);
-                if (!empty($existingCategories)) {
-                    $product->categories()->sync($existingCategories);
-                    Log::info("Categories synced: ", $existingCategories);
-                } else {
-                    Log::warning("No valid categories found for product: ", $categories);
-                }
-            }
+            $categories = explode(',', $row['categories']);
+            $product->categories()->sync($categories);
 
 Log::info($product);
             return $product;
