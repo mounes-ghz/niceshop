@@ -48,7 +48,7 @@ class ProductsImport implements ToModel,WithHeadingRow
                 // بررسی وجود دسته‌بندی‌ها در پایگاه داده
                 $existingCategories = Category::whereIn('id', $categories)->pluck('id')->toArray();
 
-                Log::info('cat',$product);
+                Log::info('cat'.$product);
                 if (!empty($existingCategories)) {
                     $product->categories()->sync($existingCategories);
                     Log::info("Categories synced: ", $existingCategories);
