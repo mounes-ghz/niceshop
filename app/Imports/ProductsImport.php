@@ -17,7 +17,6 @@ class ProductsImport implements ToModel,WithHeadingRow
             Log::info($row);
 
             if (empty($row['name']) || empty($row['brand_id']) || !is_numeric($row['brand_id'])) {
-                Log::warning("Invalid row skipped: ", $row);
                 return null;
             }
 
@@ -36,6 +35,7 @@ class ProductsImport implements ToModel,WithHeadingRow
                 'manage_stock' => 0,
                 'special_price_type' => 'fixed',
                 'description' => $row['description'],
+                'special_price'=>intval($row['price']),
             ]);
 
             if (!empty($row['categories'])) {
@@ -48,6 +48,7 @@ class ProductsImport implements ToModel,WithHeadingRow
                 // بررسی وجود دسته‌بندی‌ها در پایگاه داده
                 $existingCategories = Category::whereIn('id', $categories)->pluck('id')->toArray();
 
+                Log::info('cat',$product);
                 if (!empty($existingCategories)) {
                     $product->categories()->sync($existingCategories);
                     Log::info("Categories synced: ", $existingCategories);
