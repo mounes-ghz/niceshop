@@ -4,88 +4,64 @@ namespace NiceShop\Imports;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Modules\Brand\Entities\Brand;
-use Modules\Category\Entities\Category;
+use Modules\Media\Eloquent\HasMedia;
 use Modules\Product\Entities\Product;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
 
-class ProductsImport implements ToModel,WithHeadingRow
+class ProductsImport implements ToCollection, WithHeadingRow
 {
-    public function model(array $row)
-    {
+    use HasMedia;
 
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $row) {
             if (empty($row['name']) || empty($row['brand_id']) || !is_numeric($row['brand_id'])) {
-                return null;
+                continue;
             }
 
             $brandId = intval($row['brand_id']);
             if (!Brand::find($brandId)) {
                 Log::warning("Brand ID {$brandId} not found in the database.");
-                return null;
+                continue;
             }
-
-            $product = Product::create([
-                'name' => $row['name'],
-                'price' => intval($row['price']),
-                'brand_id' => $brandId,
-                'is_active' => true,
-                'is_virtual' => false,
-                'manage_stock' => 0,
-                'special_price_type' => 'fixed',
-                'description' => $row['description'],
-                'special_price'=>intval($row['price']),
-            ]);
 
             $categories = explode(',', $row['categories']);
-            Log::info('Categories for manual insertion:', $categories);
+            $downloads = explode(',', $row['downloads']);
 
-        DB::beginTransaction();
+            $product = Product::create([
+                'name'               => $row['name'],
+                'price'              => intval($row['price']),
+                'brand_id'           => $brandId,
+                'is_active'          => true,
+                'is_virtual'         => false,
+                'manage_stock'       => 0,
+                'special_price_type' => 'fixed',
+                'description'        => $row['description'],
+                'special_price'      => intval($row['price']),
+            ]);
 
-        try {
-            foreach ($categories as $categoryId) {
-                DB::table('product_categories')->insert([
-                    'product_id' => $product->id,
-                    'category_id' => intval($categoryId),
-                ]);
+            // مدیریت دسته‌بندی‌ها
+            if (!empty($categories)) {
+                $product->categories()->sync($categories);
             }
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error("Error inserting categories: " . $e->getMessage());
+
+            if (!empty($downloads)) {
+                foreach ($downloads as $download){
+                    $productFiles = [
+                        [
+                            'file_id' => $download,
+                            'entity_type' => 'Modules\\Product\\Entities\\Product',
+                            'entity_id' => $product->id,
+                            'locale' => 'fa',
+                            'zone' => 'downloads']  ];
+
+                }
+
+                DB::table('entity_files')->insert($productFiles);
+            }
         }
-
-
-        return $product;
-
     }
-
-//    public function model(array $row)
-//    {
-//        Log::info($row);
-//        $product = Product::create([
-//            'name' => $row['name'],
-//            'price' => intval($row['price']),
-//            'brand_id' => intval($row['brand_id']),
-//            'is_active' => true,
-//            'is_virtual' => false,
-//            'manage_stock' => 0,
-//            'special_price_type' => 'fixed',
-//            'description' => $row['description'],
-//        ]);
-//
-//        // سپس دسته‌بندی‌ها را ذخیره کنید
-//        if (!empty($row['categories'])) {
-//            $categories = explode(',', $row['categories']);
-//            $product->categories()->sync($categories);
-//        }
-//
-//        // در صورت نیاز دانلودها را نیز مدیریت کنید
-////        if (!empty($row['downloads'])) {
-////            $downloads = explode(',', $row['downloads']);
-////            $product->downloads()->sync($downloads);
-////        }
-//
-//        return $product;
-//    }
 }
