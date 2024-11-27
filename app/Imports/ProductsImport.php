@@ -55,8 +55,8 @@ class ProductsImport implements ToCollection, WithHeadingRow
                             'file_id' => $download,
                             'entity_type' => 'Modules\\Product\\Entities\\Product',
                             'entity_id' => $product->id,
-                            'locale' => 'fa',
-                            'zone' => 'downloads']  ];
+                            'locale' => 'en',
+                            'zone' => 'base_image']  ];
 
                 }
 
