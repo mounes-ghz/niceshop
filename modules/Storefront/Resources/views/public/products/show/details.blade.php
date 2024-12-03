@@ -10,18 +10,22 @@
             </product-rating>
         @endif
 
-        <template v-cloak v-if="item.is_in_stock">
+        <template v-cloak>
             <div
-                v-if="item.does_manage_stock"
+                v-if="item.is_in_stock"
                 class="availability in-stock"
             >
-                @{{ $trans('storefront::product.left_in_stock', { count: item.qty }) }}
-            </div>
-
-            <div v-else class="availability in-stock">
                 {{ trans('storefront::product.in_stock') }}
             </div>
+
+            <div
+                v-else-if="item.is_out_of_stock"
+                class="availability out-of-stock"
+            >
+                {{ trans('storefront::product.out_of_stock') }}
+            </div>
         </template>
+
 
         <div
             v-cloak
@@ -60,7 +64,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M3.58008 5.15991H17.4201C19.0801 5.15991 20.4201 6.49991 20.4201 8.15991V11.4799" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.74008 2L3.58008 5.15997L6.74008 8.32001" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M20.4201 18.84H6.58008C4.92008 18.84 3.58008 17.5 3.58008 15.84V12.52" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M17.26 21.9999L20.42 18.84L17.26 15.6799" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
-                
+
                 {{ trans('storefront::product.compare') }}
             </button>
         </div>
@@ -163,6 +167,15 @@
                     @foreach ($product->categories as $category)
                         <a href="{{ $category->url() }}">{{ $category->name }}</a>{{ $loop->last ? '' : ',' }}
                     @endforeach
+                </li>
+            @endif
+
+            @if ($product->brand_id)
+                <li>
+                    <label>برند:</label>
+
+
+                        <a href="{{ $product->brand->url() }}">{{ $product->brand->name }}</a>
                 </li>
             @endif
 
