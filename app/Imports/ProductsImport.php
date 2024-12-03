@@ -32,15 +32,15 @@ class ProductsImport implements ToCollection, WithHeadingRow
             $downloads = explode(',', $row['downloads']);
 
             $product = Product::create([
-                'name'               => $row['name'],
-                'price'              => intval($row['price']),
-                'brand_id'           => $brandId,
-                'is_active'          => true,
-                'is_virtual'         => false,
-                'manage_stock'       => 0,
+                'name' => $row['name'],
+                'price' => intval($row['price']),
+                'brand_id' => $brandId,
+                'is_active' => true,
+                'is_virtual' => false,
+                'manage_stock' => 1,
                 'special_price_type' => 'fixed',
-                'description'        => $row['description'],
-                'special_price'      => intval($row['price']),
+                'description' => $row['description'],
+                'qty' => intval($row['qty'])
             ]);
 
             // مدیریت دسته‌بندی‌ها
@@ -49,14 +49,13 @@ class ProductsImport implements ToCollection, WithHeadingRow
             }
 
             if (!empty($downloads)) {
-                foreach ($downloads as $download){
-                    $productFiles = [
-                        [
-                            'file_id' => $download,
-                            'entity_type' => 'Modules\\Product\\Entities\\Product',
-                            'entity_id' => $product->id,
-                            'locale' => 'en',
-                            'zone' => 'base_image']  ];
+                foreach ($downloads as $download) {
+                    $productFiles[] = [
+                        'file_id' => $download,
+                        'entity_type' => 'Modules\\Product\\Entities\\Product',
+                        'entity_id' => $product->id,
+                        'locale' => 'en',
+                        'zone' => 'base_image'];
 
                 }
 
