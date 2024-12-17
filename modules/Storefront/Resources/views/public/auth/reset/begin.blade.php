@@ -131,53 +131,54 @@
                                     <img src="{{ $logo }}" alt="Logo">
                                 @endif
                             </a>
-    
+
                             @include('storefront::public.auth.partials.language_picker')
                         </div>
 
                         <div class="form-group">
-                            <label 
-                                for="email"
-                                class="input-label" 
+                            <label
+                                for="phone"
+                                class="input-label"
                             >
-                                {{ trans('user::auth.email') }} <span>*</span>
+                                {{ trans('user::auth.phone') }} <span>*</span>
                             </label>
 
-                            <div 
-                                x-data
-                                class="input-group" 
-                            >
-                                <input 
+                            <div class="input-group">
+                                <input
                                     type="text"
-                                    name="email"
-                                    value="{{ old('email') }}"
+                                    name="phone"
+                                    value="{{ old('phone') }}"
                                     class="form-control"
-                                    id="email"
-                                    placeholder="{{ trans('user::auth.enter_your_email') }}" 
-                                    autofocus
+                                    id="phone"
+                                    placeholder="شماره موبایل خود را وارد کنید"
+                                    required
                                 >
-
                                 <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    viewBox="0 0 20 20" fill="none">
+                                     viewBox="0 0 20 20" fill="none">
                                     <path
                                         d="M14.167 17.0832H5.83366C3.33366 17.0832 1.66699 15.8332 1.66699 12.9165V7.08317C1.66699 4.1665 3.33366 2.9165 5.83366 2.9165H14.167C16.667 2.9165 18.3337 4.1665 18.3337 7.08317V12.9165C18.3337 15.8332 16.667 17.0832 14.167 17.0832Z"
                                         stroke="#A0AEC0" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                     <path
-                                        d="M14.1663 7.5L11.558 9.58333C10.6997 10.2667 9.29134 10.2667 8.433 9.58333L5.83301 7.5"
+                                        d="M10 8.33333V11.6667"
+                                        stroke="#A0AEC0" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M8.33366 10H11.667"
                                         stroke="#A0AEC0" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg>
                             </div>
 
-                            {!! $errors->first('email', '<span class="help-block text-red">:message</span>') !!}
+                            {!! $errors->first('phone', '<span class="help-block text-red">:message</span>') !!}
+
                         </div>
                     </div>
 
-                    <button 
+                    <button
                         type="submit"
                         x-data="{ formSubmitting: false }"
-                        :class="formSubmitting ? 'btn-loading' : ''" 
+                        :class="formSubmitting ? 'btn-loading' : ''"
                         class="btn btn-primary"
                         :disabled="formSubmitting"
                         @click="formSubmitting = true; $el.parentElement.submit()"

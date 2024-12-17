@@ -22,7 +22,8 @@ class PasswordResetRequest extends Request
     public function rules()
     {
         return [
-            'email' => 'required|email',
+            'phone' => 'required|exists:users,phone',
         ];
     }
+
 }

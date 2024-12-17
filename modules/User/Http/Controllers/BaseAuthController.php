@@ -6,8 +6,6 @@ use Illuminate\Http\Response;
 use Modules\User\Entities\Role;
 use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Mail;
-use Modules\User\Mail\ResetPasswordEmail;
 use Modules\User\Contracts\Authentication;
 use Modules\User\Events\CustomerRegistered;
 use Modules\User\Http\Requests\LoginRequest;
@@ -133,7 +131,7 @@ abstract class BaseAuthController extends Controller
      */
     public function postReset(PasswordResetRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (is_null($user)) {
             return back()->withInput()
@@ -141,12 +139,24 @@ abstract class BaseAuthController extends Controller
         }
 
         $code = $this->auth->createReminderCode($user);
+        $route = route('reset.complete', ['phone' => $user->phone, 'code' => $code]);
+        $this->sendSMS($user->phone, "برای تغییر رمز عبور به لینک زیر مراجعه کنید:\n $route");
 
-        Mail::to($user)
-            ->send(new ResetPasswordEmail($user, $this->resetCompleteRoute($user, $code)));
-
-        return back()->withSuccess(trans('user::messages.users.check_email_to_reset_password'));
+        return back()->withSuccess('کد و لینک بازنشانی به شماره موبایل شما ارسال شد.');
     }
+
+
+    private function sendSMS($phone, $message)
+    {
+        Log::info($message);
+//        // کد ارسال SMS از طریق سرویس پیامکی
+//        Http::post('https://sms-provider.com/api', [
+//            'to' => $phone,
+//            'message' => $message,
+//            'api_key' => 'YOUR_API_KEY',
+//        ]);
+    }
+
 
 
     /**
@@ -157,10 +167,9 @@ abstract class BaseAuthController extends Controller
      *
      * @return Response
      */
-    public function getResetComplete($email, $code)
+    public function getResetComplete($phone, $code)
     {
-        $user = User::where('email', $email)->firstOrFail();
-
+        $user = User::where('phone', $phone)->firstOrFail();
         if ($this->invalidResetCode($user, $code)) {
             return redirect()->route('reset')
                 ->withError(trans('user::messages.users.invalid_reset_code'));
@@ -168,6 +177,7 @@ abstract class BaseAuthController extends Controller
 
         return $this->resetCompleteView()->with(compact('user', 'code'));
     }
+
 
 
     /**
