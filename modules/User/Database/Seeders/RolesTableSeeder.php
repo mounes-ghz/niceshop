@@ -14,9 +14,9 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'ادمین', 'permissions' => $this->getAdminRolePermissions()]);
-
-        Role::create(['name' => 'مشتری']);
+//        Role::create(['name' => 'ادمین', 'permissions' => $this->getAdminRolePermissions()]);
+        Role::create(['name' => 'همکار']);
+//        Role::create(['name' => 'مشتری']);
     }
 
 
