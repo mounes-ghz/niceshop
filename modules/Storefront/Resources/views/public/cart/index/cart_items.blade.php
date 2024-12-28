@@ -55,7 +55,12 @@
                 <td>
                     <label>{{ trans('storefront::cart.table.unit_price:') }}</label>
 
-                    <span class="product-price" v-html="cartItem.unitPrice.inCurrentCurrency.formatted"></span>
+                <td>
+    <span v-if="cartItem.isPartnerPrice" v-html="cartItem.unitPrice.inCurrentCurrency.formatted"></span>
+                    <span v-else v-html="cartItem.unitPrice.inCurrentCurrency.formatted">
+    </span>
+
+
                 </td>
 
                 <td>

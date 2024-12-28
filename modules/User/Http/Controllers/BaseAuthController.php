@@ -148,7 +148,7 @@ abstract class BaseAuthController extends Controller
 
     private function sendSMS($phone, $message)
     {
-        Log::info($message);
+//        Log::info($message);
 //        // کد ارسال SMS از طریق سرویس پیامکی
 //        Http::post('https://sms-provider.com/api', [
 //            'to' => $phone,

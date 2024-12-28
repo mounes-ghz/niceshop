@@ -32,6 +32,7 @@
         :initial-per-page="{{ request('perPage', 40) }}"
         :initial-page="{{ request('page', 1) }}"
         initial-view-mode="{{ request('viewMode', 'grid') }}"
+        :is-partner="{{ json_encode($isPartner) }}"
         inline-template
     >
         <section class="product-search-wrap">
@@ -141,11 +142,11 @@
 
                             <div class="search-result-middle" :class="{ empty: emptyProducts, loading: fetchingProducts }">
                                 <div class="grid-view-products" v-if="!emptyProducts && viewMode === 'grid'">
-                                    <product-card-grid-view v-for="product in products.data" :key="product.id" :product="product"></product-card-grid-view>
+                                    <product-card-grid-view v-for="product in products.data" :key="product.id" :product="product" :is-partner="{{ json_encode($isPartner) }}" ></product-card-grid-view>
                                 </div>
 
                                 <div class="list-view-products" v-if="!emptyProducts && viewMode === 'list'">
-                                    <product-card-list-view v-for="product in products.data" :key="product.id" :product="product"></product-card-list-view>
+                                    <product-card-list-view v-for="product in products.data" :key="product.id" :product="product"  ></product-card-list-view>
                                 </div>
 
                                 <div class="empty-message" v-if="!fetchingProducts && emptyProducts">

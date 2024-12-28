@@ -127,13 +127,22 @@
             </a>
 
             <div
+
                 class="product-price product-price-clone"
                 v-html="item.formatted_price"
             ></div>
         </div>
 
         <div class="product-card-bottom">
-            <div class="product-price" v-html="item.formatted_price"></div>
+            <div class="product-price">
+                <div v-if="isPartner && item.partner_price">
+                    {{ item.partner_price.formatted }} تومان
+                </div>
+                <div v-else>
+                    {{ item.price.formatted }}
+                </div>
+
+            </div>
 
             <button
                 v-if="hasNoOption || item.is_out_of_stock"
@@ -160,14 +169,17 @@
 
 <script>
 import ProductCardMixin from "../mixins/ProductCardMixin";
-
 export default {
     mixins: [ProductCardMixin],
 
-    props: ["product"],
+    props: {
+        product: Object,
+        isPartner: Boolean, // اضافه کردن prop
+    },
 
     computed: {
         item() {
+            // console.log("Is Partner 111:", this.isPartner);
             return {
                 ...(this.product.variant ? this.product.variant : this.product),
             };

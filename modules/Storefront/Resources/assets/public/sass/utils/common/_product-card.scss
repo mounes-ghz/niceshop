@@ -29,38 +29,32 @@
         }
 
         .product-rating {
-            opacity: 0;
-            visibility: hidden;
+            opacity: 1; /* تغییر به نمایش ثابت */
+            visibility: visible;
         }
 
         .product-name {
-            transform: translateY(-33px);
+            transform: none; /* حذف حرکت نام محصول */
         }
 
         .product-card-bottom {
-            border-top-color: transparent;
+            border-top-color: $color-gray-lite; /* بازگشت به حالت پیش‌فرض */
         }
 
         .product-price {
-            opacity: 0;
-            visibility: hidden;
+            opacity: 1; /* نمایش قیمت اصلی */
+            visibility: visible;
 
             &:after {
-                opacity: 0;
-                visibility: hidden;
+                opacity: 1; /* نمایش درست پس‌زمینه */
+                visibility: visible;
             }
         }
 
         .product-price-clone {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-15px);
-
-            &:after {
-                opacity: 1;
-                visibility: visible;
-                transform: translateX(20px);
-            }
+            opacity: 0; /* غیرفعال کردن نمایش قیمت جایگزین */
+            visibility: hidden;
+            transform: none;
         }
 
         .btn-add-to-cart {

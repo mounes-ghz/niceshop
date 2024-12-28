@@ -3,7 +3,7 @@
 @section('title', trans('storefront::cart.cart'))
 
 @section('content')
-    <cart-index inline-template>
+    <cart-index :is-partner="{{ json_encode($isPartner) }}" inline-template>
         <div>
             <section class="shopping-cart-wrap">
                 <div class="container">

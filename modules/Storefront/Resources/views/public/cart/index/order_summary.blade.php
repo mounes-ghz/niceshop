@@ -8,13 +8,11 @@
             <ul class="list-inline order-summary-list">
                 <li>
                     <label>{{ trans('storefront::cart.subtotal') }}</label>
-
                     <span v-text="cart.subTotal.inCurrentCurrency.formatted"></span>
                 </li>
 
                 <li v-for="tax in cart.taxes">
                     <label v-text="tax.name"></label>
-
                     <span v-text="tax.amount.inCurrentCurrency.formatted"></span>
                 </li>
             </ul>
@@ -26,10 +24,7 @@
         </div>
 
         <div class="order-summary-bottom">
-            <a
-                href="{{ route('checkout.create') }}"
-                class="btn btn-primary btn-proceed-to-checkout"
-            >
+            <a href="{{ route('checkout.create') }}" class="btn btn-primary btn-proceed-to-checkout">
                 {{ trans('storefront::cart.proceed_to_checkout') }}
             </a>
         </div>

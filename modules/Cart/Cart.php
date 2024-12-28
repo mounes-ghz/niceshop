@@ -140,6 +140,7 @@ class Cart extends DarryldecodeCart implements JsonSerializable
     }
 
 
+
     public function crossSellProducts()
     {
         return $this->getAllProducts()
@@ -399,8 +400,19 @@ class Cart extends DarryldecodeCart implements JsonSerializable
 
     public function subTotal()
     {
-        return Money::inDefaultCurrency($this->getSubTotal())->add($this->optionsPrice());
+        $isPartner = auth()->check() && auth()->user()->roles->contains('id', 3);
+
+        $subtotal = $this->items()->sum(function ($cartItem) use ($isPartner) {
+            if ($isPartner && $cartItem->item->partner_price) {
+                return $cartItem->item->partner_price->amount() * $cartItem->qty;
+            }
+
+            return $cartItem->unitPrice()->amount() * $cartItem->qty;
+        });
+
+        return Money::inDefaultCurrency($subtotal);
     }
+
 
 
     public function shippingCost()
@@ -439,6 +451,7 @@ class Cart extends DarryldecodeCart implements JsonSerializable
             ->subtract($this->coupon()->value())
             ->add($this->tax());
     }
+
 
 
     public function tax()

@@ -11,10 +11,10 @@ class CartController
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
-    {
-        return view('storefront::public.cart.index');
-    }
+        public function index()
+        {
+            return view('storefront::public.cart.index');
+        }
 
 
     /**

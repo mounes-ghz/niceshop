@@ -40,6 +40,19 @@ class StorefrontServiceProvider extends ServiceProvider
         View::composer('storefront::public.products.index', ProductIndexPageComposer::class);
         View::composer('storefront::public.products.show', ProductShowPageComposer::class);
         View::composer('storefront::admin.storefront.tabs.*', StorefrontTabsComposer::class);
+        View::composer('storefront::public.products.show', function ($view) {
+            $isPartner = auth()->check() && auth()->user()->roles->contains('id', 3);
+            $view->with('isPartner', $isPartner);
+        });
+        View::composer([
+            'storefront::public.products.index',
+            'storefront::public.products.show',
+            'storefront::public.cart.index',
+        ], function ($view) {
+            $isPartner = auth()->user()->roles->contains('id', 3);
+            $view->with('isPartner', $isPartner);
+        });
+
 
         Paginator::defaultView('storefront::public.pagination');
     }

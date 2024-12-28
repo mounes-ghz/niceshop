@@ -57,6 +57,7 @@ class Product extends Model implements Sitemapable
     protected $fillable = [
         'brand_id',
         'tax_class_id',
+        'partner_price',
         'slug',
         'sku',
         'price',
@@ -285,5 +286,14 @@ class Product extends Model implements Sitemapable
             ->setLastModificationDate(Carbon::create($this->updated_at))
             ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
             ->setPriority(0.1);
+    }
+
+    public function getDisplayPriceAttribute()
+    {
+        $user = auth()->user();
+        if ($user && $user->hasRole('partner') && !$this->isUsingDiscount()) {
+            return $this->partner_price ?: $this->price;
+        }
+        return $this->price;
     }
 }

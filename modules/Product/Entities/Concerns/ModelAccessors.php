@@ -190,4 +190,17 @@ trait ModelAccessors
             return ($this->reviews->avg->rating / 5) * 100;
         }
     }
+
+    public function getPartnerPriceAttribute($partnerPrice): ?Money
+    {
+        return $partnerPrice ? Money::inDefaultCurrency($partnerPrice) : null;
+    }
+
+    public function getFormattedPartnerPriceAttribute(): string
+    {
+        return $this->partner_price
+            ? $this->partner_price->convertToCurrentCurrency()->format()
+            : '';
+    }
+
 }

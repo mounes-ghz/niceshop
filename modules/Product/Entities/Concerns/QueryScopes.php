@@ -18,6 +18,7 @@ trait QueryScopes
                 [
                     'products.id',
                     'products.slug',
+                    'products.partner_price'
                 ]
             );
     }

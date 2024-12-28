@@ -38,6 +38,33 @@
             </div>
 
             <div class="form-group">
+                <label for="partner-price" class="col-sm-3 control-label text-left">
+                   قیمت همکار
+                </label>
+
+                <div class="col-sm-9">
+                    <div class="input-group price-input-group">
+            <span class="input-group-addon">
+                @{{ defaultCurrencySymbol }}
+            </span>
+
+                        <input
+                            type="number"
+                            min="0"
+                            name="partner_price"
+                            step="0.1"
+                            id="partner-price"
+                            class="form-control"
+                            @wheel="$event.target.blur()"
+                            v-model="form.partner_price"
+                        >
+                    </div>
+
+                    <span class="help-block text-red" v-if="errors.has('partner_price')" v-text="errors.get('partner_price')"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label for="special-price" class="col-sm-3 control-label text-left">
                     {{ trans('product::attributes.special_price') }}
                 </label>

@@ -28,6 +28,7 @@ class ProductVariantResource extends JsonResource
             'in_stock' => $this->in_stock,
             'sku' => $this->sku,
             'price' => $this->price->amount(),
+            'partner_price' => $this->partner_price,
             'special_price_type' => $this->special_price_type,
             'special_price' => $this->special_price?->amount(),
             'special_price_start' => $this->special_price_start,

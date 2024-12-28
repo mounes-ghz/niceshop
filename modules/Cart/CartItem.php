@@ -176,8 +176,16 @@ class CartItem implements JsonSerializable
      */
     public function unitPrice()
     {
+        $isPartner = auth()->check() && auth()->user()->roles->contains('id', 3);
+
+        if ($isPartner && $this->item->partner_price) {
+            return $this->item->partner_price;
+        }
+
         return $this->item->selling_price->add($this->optionsPrice());
     }
+
+
 
 
     /**
