@@ -49,7 +49,7 @@ class StorefrontServiceProvider extends ServiceProvider
             'storefront::public.products.show',
             'storefront::public.cart.index',
         ], function ($view) {
-            $isPartner = auth()->user()->roles->contains('id', 3);
+            $isPartner = auth()->check() && auth()->user()->roles->contains('id', 3);
             $view->with('isPartner', $isPartner);
         });
 
