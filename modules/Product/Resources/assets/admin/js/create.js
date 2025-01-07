@@ -22,6 +22,9 @@ new Vue({
             manage_stock: 0,
             in_stock: 1,
             special_price_type: "fixed",
+            partner_price: {
+                amount: null, // مقدار پیش‌فرض
+            }, // افزودن مقدار پیش‌فرض
             meta: {},
             attributes: [],
             downloads: [],
@@ -85,7 +88,14 @@ new Vue({
         },
 
         submit({ submissionType }) {
+
             this.formSubmissionType = submissionType;
+            const formData = { ...this.form };
+
+            // اطمینان از ارسال مقدار عددی برای partner_price
+            if (formData.partner_price && typeof formData.partner_price === "object") {
+                formData.partner_price = formData.partner_price.amount;
+            }
 
             $.ajax({
                 type: "POST",

@@ -39,7 +39,7 @@
 
             <div class="form-group">
                 <label for="partner-price" class="col-sm-3 control-label text-left">
-                   قیمت همکار
+                    قیمت همکار
                 </label>
 
                 <div class="col-sm-9">
@@ -56,13 +56,16 @@
                             id="partner-price"
                             class="form-control"
                             @wheel="$event.target.blur()"
-                            v-model="form.partner_price"
+                            v-model="form.partner_price.amount"
                         >
                     </div>
 
                     <span class="help-block text-red" v-if="errors.has('partner_price')" v-text="errors.get('partner_price')"></span>
                 </div>
             </div>
+
+
+
 
             <div class="form-group">
                 <label for="special-price" class="col-sm-3 control-label text-left">

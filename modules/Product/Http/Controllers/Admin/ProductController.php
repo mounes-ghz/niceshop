@@ -60,10 +60,16 @@ class ProductController
     {
         $this->disableSearchSyncing();
 
-        $entity = $this->getModel()->create(
-            $this->getRequest('store')->all()
-        );
+        // دریافت داده‌های فرم
+        $data = $this->getRequest('store')->all();
 
+        // اطمینان از ارسال مقدار عددی برای partner_price
+        if (isset($data['partner_price']) && is_array($data['partner_price'])) {
+            $data['partner_price'] = $data['partner_price']['amount'] ?? null;
+        }
+
+        // ایجاد محصول با داده‌های اصلاح شده
+        $entity = $this->getModel()->create($data);
 
         $this->searchable($entity);
 
@@ -79,13 +85,15 @@ class ProductController
                     'success' => true,
                     'message' => $message,
                     'product_id' => $entity->id,
-                ], 200
+                ],
+                200
             );
         }
 
         return redirect()->route("{$this->getRoutePrefix()}.index")
             ->withSuccess($message);
     }
+
 
 
     /**
@@ -141,9 +149,16 @@ class ProductController
 
         $this->disableSearchSyncing();
 
-        $entity->update(
-            $this->getRequest('update')->all()
-        );
+        // دریافت داده‌های فرم
+        $data = $this->getRequest('update')->all();
+
+        // اطمینان از ارسال مقدار عددی برای partner_price
+        if (isset($data['partner_price']) && is_array($data['partner_price'])) {
+            $data['partner_price'] = $data['partner_price']['amount'] ?? null;
+        }
+
+        // به‌روزرسانی محصول با داده‌های اصلاح شده
+        $entity->update($data);
 
         $entity->withoutEvents(function () use ($entity) {
             $entity->touch();
@@ -165,10 +180,12 @@ class ProductController
                     'success' => true,
                     'message' => $message,
                     'product_resource' => $productEditResource,
-                ], 200
+                ],
+                200
             );
         }
     }
+
 
 
 }

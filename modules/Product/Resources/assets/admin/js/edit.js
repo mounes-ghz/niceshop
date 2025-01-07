@@ -28,6 +28,7 @@ new Vue({
             variants: [],
             options: [],
             slug: null,
+            partner_price: null,
         },
         errors: new Errors(),
         selectizeConfig: {
@@ -66,6 +67,10 @@ new Vue({
 
         setFormData() {
             this.form = { ...this.prepareFormData(NiceShop.data["product"]) };
+
+            if (this.form.partner_price === null || typeof this.form.partner_price !== "object") {
+                this.form.partner_price = { amount: null, formatted: null };
+            }
         },
 
         setDefaultVariantUid() {

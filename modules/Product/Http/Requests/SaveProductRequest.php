@@ -2,6 +2,7 @@
 
 namespace Modules\Product\Http\Requests;
 
+use AWS\CRT\Log;
 use Illuminate\Validation\Rule;
 use Modules\Option\Entities\Option;
 use Modules\Product\Entities\Product;
@@ -38,6 +39,7 @@ class SaveProductRequest extends Request
 
     public function getProductRules(): array
     {
+      \Illuminate\Support\Facades\Log::info($this);
         return array_merge(
             [
                 'slug' => $this->getSlugRules(),
@@ -47,7 +49,7 @@ class SaveProductRequest extends Request
                 'tax_class_id' => ['nullable', Rule::exists('tax_classes', 'id')],
                 'price' => 'required_without:variants|nullable|numeric|min:0|max:99999999999999',
                 'special_price' => 'nullable|numeric|min:0|max:99999999999999',
-                'partner_price' => 'nullable|numeric|min:0|max:99999999999999',
+//                'partner_price' => 'nullable|numeric|min:0|max:99999999999999',
                 'special_price_type' => ['nullable', Rule::in(['fixed', 'percent'])],
                 'special_price_start' => 'nullable|date|before:special_price_end',
                 'special_price_end' => 'nullable|date|after:special_price_start',

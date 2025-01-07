@@ -72,12 +72,20 @@
 
     <div class="details-info-middle">
         @if ($product->variant)
-            <div v-if="isActiveItem" class="product-price" v-html="item.formatted_price">
-                {!! $item->is_active ? $item->formatted_price : '' !!}
+            <div v-if="isActiveItem" class="product-price">
+                @if ($isPartner && $product->partner_price)
+                    <span v-html="'{!! $product->formatted_partner_price !!}'"></span>
+                @else
+                    <span v-html="'{!! $item->formatted_price !!}'"></span>
+                @endif
             </div>
         @else
-            <div class="product-price" v-html="item.formatted_price">
-                {!! $item->formatted_price !!}
+            <div class="product-price">
+                @if ($isPartner && $product->partner_price)
+                    <span v-html="'{!! $product->formatted_partner_price !!}'"></span>
+                @else
+                    <span v-html="'{!! $item->formatted_price !!}'"></span>
+                @endif
             </div>
         @endif
 
