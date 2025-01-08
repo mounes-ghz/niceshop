@@ -31,6 +31,7 @@ class ProductVariant extends Model
         'sku',
         'position',
         'price',
+        'partner_price',
         'special_price',
         'special_price_type',
         'special_price_start',
@@ -104,7 +105,7 @@ class ProductVariant extends Model
 
     public function scopeWithPrice($query)
     {
-        $query->addSelect(['price', 'special_price', 'special_price_type', 'special_price_start', 'special_price_end']);
+        $query->addSelect(['price','partner_price', 'special_price', 'special_price_type', 'special_price_start', 'special_price_end']);
     }
 
 
@@ -129,7 +130,10 @@ class ProductVariant extends Model
         return Money::inDefaultCurrency($price);
     }
 
-
+    public function getPartnerPriceAttribute($partnerPrice)
+    {
+        return Money::inDefaultCurrency($partnerPrice);
+    }
     public function getSpecialPriceAttribute($specialPrice)
     {
         if (!is_null($specialPrice)) {
