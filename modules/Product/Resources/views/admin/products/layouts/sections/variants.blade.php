@@ -312,6 +312,27 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label :for="`variants-${variant.uid}-partner-price`">
+                                                                {{ 'قیمت همکار' }}
+                                                            </label>
+
+                                                            <div class="input-group price-input-group">
+            <span class="input-group-addon">
+                @{{ defaultCurrencySymbol }}
+            </span>
+
+                                                                <input type="number" :name="`variants.${variant.uid}.partner_price`" min="0" step="0.1" :id="`variants-${variant.uid}-partner-price`" class="form-control" @wheel="$event.target.blur()" v-model="variant.partner_price">
+                                                            </div>
+
+                                                            <span class="help-block text-red" v-if="errors.has(`variants.${variant.uid}.partner_price`)" v-text="errors.get(`variants.${variant.uid}.partner_price`)">
+        </span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

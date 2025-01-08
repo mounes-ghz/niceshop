@@ -106,7 +106,8 @@ class SaveProductRequest extends Request
         return [
             'variants.*.name' => 'required',
             'variants.*.sku' => 'nullable',
-            'variants.*.price' => 'required_if:variants.*.is_active,true|nullable|numeric|min:0|max:99999999999999',
+            'variants.*.price' => 'nullable|numeric|min:0|max:99999999999999',
+            'variants.*.partner_price' => 'required_if:variants.*.is_active,true|nullable|numeric|min:0|max:99999999999999',
             'variants.*.special_price' => 'nullable|numeric|min:0|max:99999999999999',
             'variants.*.special_price_type' => ['nullable', Rule::in(['fixed', 'percent'])],
             'variants.*.special_price_start' => 'nullable|date|before:variants.*.special_price_end',
