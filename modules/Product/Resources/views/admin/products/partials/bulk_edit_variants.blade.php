@@ -32,6 +32,7 @@
                 <option value="media">{{ trans('product::products.form.variants.media') }}</option>
                 <option value="sku">{{ trans('product::products.form.variants.sku') }}</option>
                 <option value="price">{{ trans('product::products.form.variants.price') }}</option>
+                <option value="partner_price">{{ 'قیمت همکار' }}</option>
                 <option value="special_price">{{ trans('product::products.form.variants.special_price') }}</option>
                 <option value="manage_stock">{{ trans('product::products.form.variants.manage_stock') }}</option>
                 <option value="in_stock">{{ trans('product::products.form.variants.in_stock') }}</option>
@@ -105,11 +106,35 @@
                 </div>
             </div>
         </div>
+        <div v-else-if="bulkEditVariantsField === 'partner_price'" class="form-group">
+            <label for="bulk-edit-variants-partner-price" class="col-sm-3 control-label text-left">
+                {{ 'قیمت همکار' }}
+            </label>
+
+            <div class="col-sm-5">
+                <div class="input-group">
+            <span class="input-group-addon">
+                @{{ defaultCurrencySymbol }}
+            </span>
+
+                    <input
+                        type="number"
+                        name="bulk_edit_variants_partner_price"
+                        min="0"
+                        step="0.1"
+                        id="bulk-edit-variants-partner-price"
+                        class="form-control"
+                        @wheel="$event.target.blur()"
+                        v-model.number="bulkEditVariants.partner_price"
+                    >
+                </div>
+            </div>
+        </div>
 
         <template v-else-if="bulkEditVariantsField === 'special_price'">
             <div class="form-group">
                 <label for="bulk-edit-variants-special-price" class="col-sm-3 control-label text-left">
-                    {{ trans('product::products.form.variants.special_price') }}
+                    {{ 'قیمت همکار' }}
                 </label>
 
                 <div class="col-sm-5">
