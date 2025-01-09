@@ -324,7 +324,9 @@
                 @{{ defaultCurrencySymbol }}
             </span>
 
-                                                                <input type="number" :name="`variants.${variant.uid}.partner_price`" min="0" step="0.1" :id="`variants-${variant.uid}-partner-price`" class="form-control" @wheel="$event.target.blur()" v-model="variant.partner_price">
+                                                                <input
+                                                                    type="number" :name="`variants.${variant.uid}.partner_price`" min="0" step="0.1" :id="`variants-${variant.uid}-partner-price`" class="form-control" @wheel="$event.target.blur()" v-model="variant.partner_price"  :placeholder="variant.partner_price && typeof variant.partner_price === 'object' ? variant.partner_price.amount : ''"
+                                                                >
                                                             </div>
 
                                                             <span class="help-block text-red" v-if="errors.has(`variants.${variant.uid}.partner_price`)" v-text="errors.get(`variants.${variant.uid}.partner_price`)">

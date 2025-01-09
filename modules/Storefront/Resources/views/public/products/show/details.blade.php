@@ -73,8 +73,9 @@
     <div class="details-info-middle">
         @if ($product->variant)
             <div v-if="isActiveItem" class="product-price">
-                @if ($isPartner && $product->partner_price)
-                    <span v-html="'{!! $product->formatted_partner_price !!}'"></span>
+                @if ($isPartner && $product->variant && $product->variant->partner_price)
+                    <span > {!! $product->formatted_partner_price!!}</span>
+                    <span v-html="'{!! $item->formatted_partner_price!!}'"></span>
                 @else
                     <span v-html="'{!! $item->formatted_price !!}'"></span>
                 @endif

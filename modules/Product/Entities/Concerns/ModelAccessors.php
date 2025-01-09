@@ -196,11 +196,27 @@ trait ModelAccessors
         return $partnerPrice ? Money::inDefaultCurrency($partnerPrice) : null;
     }
 
+//    public function getFormattedPartnerPriceAttribute(): string
+//    {
+//        return $this->partner_price
+//            ? $this->partner_price->convertToCurrentCurrency()->format()
+//            : '';
+//    }
+
     public function getFormattedPartnerPriceAttribute(): string
     {
+        // اگر محصول دارای واریانت باشد، مقدار واریانت را برگردان
+        if ($this->variant && $this->variant->partner_price) {
+            return $this->variant->partner_price
+                ? $this->variant->partner_price->convertToCurrentCurrency()->format()
+                : '';
+        }
+
+        // اگر واریانت وجود ندارد، مقدار محصول را برگردان
         return $this->partner_price
             ? $this->partner_price->convertToCurrentCurrency()->format()
             : '';
     }
+
 
 }
