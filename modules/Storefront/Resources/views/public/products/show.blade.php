@@ -1,4 +1,12 @@
 @extends('storefront::public.layout')
+@section('meta')
+    <meta name="product_id" content="{{ $product->id ?? '' }}">
+    <meta name="product_name" content="{{ $product->name ?? '' }}">
+    <meta name="product_price" content="{{ $product->price ?? '' }}">
+    <meta name="product_old_price" content="{{ $product->old_price ?? '' }}">
+    <meta name="availability" content="{{ $product->availability ? 'instock' : 'outofstock' }}">
+    <meta property="og:image" content="{{ $product->image_url ?? '' }}">
+@endsection
 
 @section('title', $product->name)
 
