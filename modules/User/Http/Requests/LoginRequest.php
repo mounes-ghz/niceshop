@@ -22,7 +22,7 @@ class LoginRequest extends Request
     public function rules()
     {
         return [
-            'email' => 'required|email',
+            'phone' => 'required|regex:/^09[0-9]{9}$/',
             'password' => 'required',
         ];
     }

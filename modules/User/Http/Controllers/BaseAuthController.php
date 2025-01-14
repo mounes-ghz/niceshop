@@ -2,7 +2,11 @@
 
 namespace Modules\User\Http\Controllers;
 
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Modules\User\Entities\Role;
 use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
@@ -62,11 +66,14 @@ abstract class BaseAuthController extends Controller
     public function postLogin(LoginRequest $request)
     {
         try {
-            $loggedIn = $this->auth->login([
-                'email' => $request->email,
+            // اطلاعات لاگین
+            $credentials = [
+                'phone' => $request->phone,
                 'password' => $request->password,
-            ], (bool)$request->get('remember_me', false));
+            ];
+            $remember = (bool) $request->get('remember_me', false);
 
+            $loggedIn = $this->auth->login($credentials, $remember);
             if (!$loggedIn) {
                 return back()->withInput()
                     ->withError(trans('user::messages.users.invalid_credentials'));
@@ -81,6 +88,7 @@ abstract class BaseAuthController extends Controller
                 ->withError(trans('user::messages.users.account_is_blocked', ['delay' => $e->getDelay()]));
         }
     }
+
 
 
     /**

@@ -61,9 +61,9 @@ class AuthController extends BaseAuthController
             return redirect()->route('login')->with('error', $e->getMessage());
         }
 
-        if (User::registered($user->getEmail())) {
+        if (User::registered($user->phone)) {
             auth()->login(
-                User::findByEmail($user->getEmail())
+                User::findByPhone($user->phone)
             );
 
             return redirect($this->redirectTo());
@@ -74,8 +74,8 @@ class AuthController extends BaseAuthController
         $registeredUser = $this->auth->registerAndActivate([
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'email' => $user->getEmail(),
-            'phone' => '',
+//            'email' => $user->getEmail(),
+            'phone' => $user->phone,
             'password' => str_random(),
         ]);
 
@@ -144,7 +144,7 @@ class AuthController extends BaseAuthController
      */
     protected function resetCompleteRoute($user, $code)
     {
-        return route('reset.complete', [$user->email, $code]);
+        return route('reset.complete', [$user->phone, $code]);
     }
 
 

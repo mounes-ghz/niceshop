@@ -47,15 +47,20 @@ class User extends EloquentUser implements AuthenticatableContract
     ];
 
 
-    public static function registered($email)
+    public static function registered($phone)
     {
-        return static::where('email', $email)->exists();
+        return static::where('phone', $phone)->exists();
     }
 
 
     public static function findByEmail($email)
     {
         return static::where('email', $email)->first();
+    }
+
+    public static function findByPhone($phone)
+    {
+        return static::where('phone', $phone)->first();
     }
 
 

@@ -29,7 +29,7 @@ class CustomerService
     private function getCustomerData($request)
     {
         return array_merge($request->billing, [
-            'email' => $request->customer_email,
+//            'email' => $request->customer_email,
             'phone' => $request->customer_phone,
             'password' => $request->password,
         ]);

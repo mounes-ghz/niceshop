@@ -55,6 +55,7 @@ return [
 
     'users' => [
         'model' => User::class,
+        'login_attribute' => 'phone', // تغییر به phone
     ],
 
     /*

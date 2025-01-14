@@ -98,7 +98,7 @@
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </a>
-    
+
                         <div class="auth-form-header-content">
                             <div class="auth-form-header-top">
                                 <a href="{{ route('home') }}" class="auth-form-header-logo">
@@ -113,13 +113,13 @@
                             </div>
 
                             <h2>{{ trans('user::auth.welcome') }}</h2>
-    
+
                             <p>{{ trans('user::auth.enter_your_details') }}</p>
                         </div>
                     </div>
-    
+
                     @include('storefront::public.auth.partials.notification')
-    
+
                     <form class="auth-form-body" method="POST" action="{{ route('login.post') }}">
                         @csrf
 
@@ -134,30 +134,30 @@
 
                             @include('storefront::public.auth.partials.language_picker')
                         </div>
-    
+
                         <div>
                             <div class="form-group">
-                                <label 
-                                    for="email"
-                                    class="input-label" 
+                                <label
+                                    for="phone"
+                                    class="input-label"
                                 >
-                                    {{ trans('user::auth.email') }} <span>*</span>
+                                    {{ trans('user::auth.phone') }} <span>*</span>
                                 </label>
-    
-                                <div 
+
+                                <div
                                     x-data
-                                    class="input-group" 
+                                    class="input-group"
                                 >
-                                    <input 
+                                    <input
                                         type="text"
-                                        name="email"
-                                        value="{{ old('email') }}"
+                                        name="phone"
+                                        value="{{ old('phone') }}"
                                         class="form-control"
-                                        id="email"
-                                        placeholder="{{ trans('user::auth.enter_your_email') }}"
+                                        id="phone"
+                                        placeholder="لطفا تلفن خود را وارد کنید"
                                         autofocus
                                     >
-    
+
                                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 20 20" fill="none">
                                         <path
@@ -170,24 +170,24 @@
                                             stroke-linejoin="round" />
                                     </svg>
                                 </div>
-    
-                                {!! $errors->first('email', '<span class="help-block text-red">:message</span>') !!}
+
+                                {!! $errors->first('phone', '<span class="help-block text-red">:message</span>') !!}
                             </div>
-    
+
                             <div class="form-group">
-                                <label 
+                                <label
                                     for="password"
-                                    class="input-label" 
+                                    class="input-label"
                                 >
                                     {{ trans('user::auth.password') }} <span>*</span>
                                 </label>
-    
-                                <div 
-                                    x-data="{ showPassword: false }" 
+
+                                <div
+                                    x-data="{ showPassword: false }"
                                     class="input-group"
                                 >
-                                    <div 
-                                        class="password-toggle-icon" 
+                                    <div
+                                        class="password-toggle-icon"
                                         :data-tooltip="showPassword ? '{{ trans('user::auth.hide_password') }}' : '{{ trans('user::auth.show_password') }}'"
                                         @click="showPassword = !showPassword"
                                     >
@@ -202,17 +202,17 @@
                                                 x-bind:stroke="showPassword ? '#0E1E3E' : '#A0AEC0'" stroke-width="1.5" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
-                                        
+
                                         <div class="show-password" :class="showPassword ? 'animate-show' : ''"></div>
                                     </div>
-    
-                                    <input 
+
+                                    <input
                                         :type="showPassword ? 'text' : 'password'"
-                                        name="password" 
+                                        name="password"
                                         placeholder="{{ trans('user::auth.enter_your_password') }}"
-                                        class="form-control" 
+                                        class="form-control"
                                     >
-    
+
                                     <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 20 20" fill="none">
                                         <path
@@ -231,43 +231,43 @@
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </div>
-    
+
                                 {!! $errors->first('password', '<span class="help-block text-red">:message</span>') !!}
                             </div>
-    
+
                             <div class="checkbox-group">
                                 <div class="checkbox">
                                     <input type="hidden" name="remember_me" value="0">
-    
-                                    <input 
+
+                                    <input
                                         type="checkbox"
                                         name="remember_me"
-                                        class="checkbox-element" 
+                                        class="checkbox-element"
                                         id="remember-me"
-                                        value="1" 
+                                        value="1"
                                     >
-    
+
                                     <label class="checkbox-label" for="remember-me">
                                         <span>
                                             <svg width="12px" height="10px" viewbox="0 0 12 10">
                                                 <polyline points="1.5 6 4.5 9 12.5 1"></polyline>
                                             </svg>
                                         </span>
-    
+
                                         <span>{{ trans('user::attributes.auth.remember_me') }}</span>
                                     </label>
                                 </div>
-            
+
                                 <a href="{{ route('reset') }}" class="forgot-password">
                                     {{ trans('user::auth.forgot_password') }}
                                 </a>
                             </div>
                         </div>
-    
-                        <button 
+
+                        <button
                             type="submit"
                             x-data="{ formSubmitting: false }"
-                            :class="formSubmitting ? 'btn-loading' : ''" 
+                            :class="formSubmitting ? 'btn-loading' : ''"
                             class="btn btn-primary"
                             :disabled="formSubmitting"
                             @click="formSubmitting = true; $el.parentElement.submit()"
@@ -275,7 +275,7 @@
                             {{ trans('user::auth.sign_in') }}
                         </button>
                     </form>
-    
+
                     @include('storefront::public.auth.partials.social_login')
                 </div>
             </div>
