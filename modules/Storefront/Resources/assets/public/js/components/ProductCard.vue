@@ -136,7 +136,7 @@
         <div class="product-card-bottom">
             <div class="product-price">
                 <div v-if="isPartner && item.partner_price">
-                    {{ item.partner_price.formatted }} تومان
+                    {{ item.partner_price.formatted }}
                 </div>
                 <div v-else>
                     {{ item.price.formatted }}
