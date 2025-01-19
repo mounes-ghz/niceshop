@@ -310,11 +310,10 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                            <div class="product-price"
+                                                 v-html="isPartner && product.partner_price ? product.partner_price : product.formatted_price"></div>
 
-                                            <div
-                                                class="product-price"
-                                                v-html="product.formatted_price"
-                                            ></div>
+
                                         </div>
                                     </a>
                                 </li>
@@ -375,6 +374,8 @@ import { throttle } from "lodash";
 export default {
     props: [
         "categories",
+        "isPartner",
+        "products",
         "mostSearchedKeywords",
         "isMostSearchedKeywordsEnabled",
         "initialQuery",
@@ -436,6 +437,10 @@ export default {
         lastSuggestion() {
             return this.allSuggestions[this.allSuggestions.length - 1];
         },
+        // isPartner() {
+            // console.log(this.$props.isPartner);
+            // return this.$props.isPartner; // یا هر منبع دیگری که مشخص می‌کند کاربر همکار است
+        // },
     },
 
     created() {

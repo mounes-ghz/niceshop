@@ -18,6 +18,12 @@ class SuggestionController
     public function index(Product $model): SuggestionsResponse
     {
         $products = $this->getProducts($model);
+        $products->each(function ($product) {
+            // تنظیم مقدار is_partner بر اساس نقش کاربر
+            $product->is_partner = auth()->check() && auth()->user()->roles->contains('id', 3);
+
+
+        });
 
         return new SuggestionsResponse(
             request('query'),
@@ -37,6 +43,8 @@ class SuggestionController
      */
     private function getProducts(Product $model)
     {
+        $isPartner = auth()->check() && auth()->user()->roles->contains('id', 3);
+
         return $model->search(request('query'))
             ->query()
             ->limit(10)
@@ -49,6 +57,7 @@ class SuggestionController
                 'products.in_stock',
                 'products.manage_stock',
                 'products.qty',
+                'products.partner_price',
             ])
             ->with(['files', 'categories' => function ($query) {
                 $query->limit(5);

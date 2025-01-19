@@ -47,6 +47,7 @@ class StorefrontServiceProvider extends ServiceProvider
         View::composer([
             'storefront::public.products.index',
             'storefront::public.products.show',
+            'storefront::public.layout.header',
             'storefront::public.cart.index',
         ], function ($view) {
             $isPartner = auth()->check() && auth()->user()->roles->contains('id', 3);

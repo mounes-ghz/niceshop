@@ -77,6 +77,7 @@ class SuggestionsResponse implements Responsable
     {
         return $this->products->map(function (Product $product) {
             return [
+                'partner_price'=>$product->variant?->formatted_partner_price ?? $product->formatted_partner_price,
                 'slug' => $product->slug,
                 'name' => $this->highlight($product->name),
                 'formatted_price' => $product->variant?->formatted_price ?? $product->formatted_price,
