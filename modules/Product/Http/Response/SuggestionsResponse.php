@@ -77,6 +77,7 @@ class SuggestionsResponse implements Responsable
     {
         return $this->products->map(function (Product $product) {
             return [
+                'is_partner'=> auth()->check() && auth()->user()->roles->contains('id', 3),
                 'partner_price'=>$product->variant?->formatted_partner_price ?? $product->formatted_partner_price,
                 'slug' => $product->slug,
                 'name' => $this->highlight($product->name),

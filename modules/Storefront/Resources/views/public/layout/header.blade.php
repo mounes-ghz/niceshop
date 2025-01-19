@@ -23,7 +23,6 @@
                 <header-search
                     :categories="{{ $categories }}"
                     :most-searched-keywords="{{ $mostSearchedKeywords }}"
-                    :is-partner="{{$isPartner}}"
                     is-most-searched-keywords-enabled="{{ setting('storefront_most_searched_keywords_enabled') }}"
                     initial-query="{{ request('query') }}"
                     initial-category="{{ request('category') }}"

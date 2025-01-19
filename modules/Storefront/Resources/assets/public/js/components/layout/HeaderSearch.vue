@@ -311,7 +311,11 @@
                                                 </ul>
                                             </div>
                                             <div class="product-price"
-                                                 v-html="isPartner && product.partner_price ? product.partner_price : product.formatted_price"></div>
+                                                 v-html="product.is_partner && product.partner_price
+              ? product.partner_price
+              : product.formatted_price">
+                                            </div>
+
 
 
                                         </div>
