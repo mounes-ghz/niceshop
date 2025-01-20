@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="samandehi" content="168834378"/>
+    <meta name="enamad" content="31726740" />
     <title>
         @hasSection('title')
             @yield('title') - {{ setting('store_name') }}
