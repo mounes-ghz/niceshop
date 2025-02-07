@@ -25,40 +25,43 @@ class CheckoutCompleteController
     {
         $order = Order::findOrFail($orderId);
 
-        switch (request()->query('paymentMethod')) {
+        $gateway = Gateway::get(request('paymentMethod'));
+
+        switch ($gateway) {
             case "iyzico": {
-                    try {
-                        $request = new \Iyzipay\Request\RetrieveCheckoutFormRequest();
-                        $request->setLocale(
-                            locale() === 'tr'
-                                ? \Iyzipay\Model\Locale::TR
-                                : \Iyzipay\Model\Locale::EN
-                        );
-                        $request->setConversationId(request()->query('reference'));
-                        $request->setToken($_POST['token']);
+                try {
+                    $request = new \Iyzipay\Request\RetrieveCheckoutFormRequest();
+                    $request->setLocale(
+                        locale() === 'tr'
+                            ? \Iyzipay\Model\Locale::TR
+                            : \Iyzipay\Model\Locale::EN
+                    );
+                    $request->setConversationId(request()->query('reference'));
+                    $request->setToken($_POST['token']);
 
-                        $options = new \Iyzipay\Options();
-                        $options->setApiKey(setting('iyzico_api_key'));
-                        $options->setSecretKey(setting('iyzico_api_secret'));
-                        $options->setBaseUrl(
-                            setting('iyzico_test_mode')
-                                ? 'https://sandbox-api.iyzipay.com'
-                                : 'https://api.iyzipay.com'
-                        );
+                    $options = new \Iyzipay\Options();
+                    $options->setApiKey(setting('iyzico_api_key'));
+                    $options->setSecretKey(setting('iyzico_api_secret'));
+                    $options->setBaseUrl(
+                        setting('iyzico_test_mode')
+                            ? 'https://sandbox-api.iyzipay.com'
+                            : 'https://api.iyzipay.com'
+                    );
 
-                        $response = \Iyzipay\Model\CheckoutForm::retrieve($request, $options);
+                    $response = \Iyzipay\Model\CheckoutForm::retrieve($request, $options);
 
-                        if ($response->getPaymentStatus() !== 'SUCCESS') {
-                            return redirect()->route('checkout.payment_canceled.store', ['orderId' => $orderId, 'paymentMethod' => request()->query('paymentMethod')]);
-                        }
-                    } catch (Exception $e) {
+                    if ($response->getPaymentStatus() !== 'SUCCESS') {
                         return redirect()->route('checkout.payment_canceled.store', ['orderId' => $orderId, 'paymentMethod' => request()->query('paymentMethod')]);
                     }
-
-                    break;
+                } catch (Exception $e) {
+                    return redirect()->route('checkout.payment_canceled.store', ['orderId' => $orderId, 'paymentMethod' => request()->query('paymentMethod')]);
                 }
+
+                break;
+            }
             case 'payir':
             case 'zarinpal':
+            case 'jibit':
             case 'zibal':
             case 'sadad':
             case 'saman':
@@ -67,34 +70,34 @@ class CheckoutCompleteController
             case 'irankish':
             case 'behpardakht':
             case 'payping': {
-                    $transactionId = session()->get('transactionId');
-                    $amount        = $order->total->convertToCurrentCurrency()->amount();
+                $transactionId = session()->get('transactionId');
+                $amount        = $order->total->convertToCurrentCurrency()->amount();
 
-                    $payment = new Payment();
-                    $shetabit = new Shetabit(request()->query('paymentMethod'));
+                $payment = new Payment();
+                $shetabit = new Shetabit(request()->query('paymentMethod'));
 
-                    try {
-                        $receipt = $payment->via(request()->query('paymentMethod'))
-                            ->config($shetabit->getConfigs())
-                            ->amount(intval($amount))->transactionId($transactionId)->verify();
-                    } catch (Exception $e) {
-                        return redirect()->route('checkout.payment_canceled.store', ['orderId' => $orderId, 'paymentMethod' => request()->query('paymentMethod')]);
-                    }
-
-                    break;
+                try {
+                    $receipt = $payment->via(request()->query('paymentMethod'))
+                        ->config($shetabit->getConfigs())
+                        ->amount(intval($amount))->transactionId($transactionId)->verify();
+                } catch (Exception $e) {
+                    return redirect()->route('checkout.payment_canceled.store', ['orderId' => $orderId, 'paymentMethod' => request()->query('paymentMethod')]);
                 }
-        }
 
-        $gateway = Gateway::get(request('paymentMethod'));
+                break;
+            }
 
-        try {
-            $response = $gateway->complete($order);
-        } catch (Exception $e) {
-            $orderService->delete($order);
+            default: {
+                try {
+                    $response = $gateway->complete($order);
+                } catch (Exception $e) {
+                    $orderService->delete($order);
 
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], 403);
+                    return response()->json([
+                        'message' => $e->getMessage(),
+                    ], 403);
+                }
+            }
         }
 
         $order->storeTransaction($response);
