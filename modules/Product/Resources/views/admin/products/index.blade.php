@@ -7,7 +7,7 @@
 @endcomponent
 
 @component('admin::components.page.index_table')
-    @slot('buttons', ['create', 'upload_excel'])
+    @slot('buttons', ['create', 'upload_excel','selected_products','update_products'])
     @slot('resource', 'products')
     @slot('name', trans('product::products.product'))
     @slot('thead')
@@ -65,6 +65,32 @@
     </div>
 </div>
 
+<!-- مدال آپلود اکسل -->
+<div class="modal fade" id="updateExcelModal" tabindex="-1" role="dialog" aria-labelledby="updateExcelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateExcelModalLabel">{{ trans('product::products.upload_update_excel') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('admin.products.update_from_excel') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="excelFile">{{ trans('product::products.choose_excel_file') }}</label>
+                        <input type="file" name="file" id="excelFile" class="form-control" accept=".xlsx, .xls">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('product::products.cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ trans('product::products.upload') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @push('scripts')
     <script>

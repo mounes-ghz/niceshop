@@ -15,7 +15,9 @@ use Modules\Product\Http\Requests\SaveProductRequest;
 use Modules\Product\Transformers\ProductEditResource;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use NiceShop\Exports\ProductsExport;
 use NiceShop\Imports\ProductsImport;
+use NiceShop\Imports\ProductsUpdateImport;
 
 
 class ProductController
@@ -186,6 +188,35 @@ class ProductController
         }
     }
 
+    public function exportSelected(Request $request)
+    {
 
+        $productIds = explode(',', $request->input('selected_products', ''));
+        if (empty($productIds)) {
+            return back()->with('error', 'لطفا حداقل یک محصول را انتخاب کنید.');
+        }
+
+        return Excel::download(new ProductsExport($productIds), 'selected_products.xlsx');
+    }
+
+    public function importProducts(Request $request)
+    {
+        // بررسی اینکه فایلی آپلود شده است
+        if (!$request->hasFile('file')) {
+            return back()->with('error', 'لطفا یک فایل اکسل انتخاب کنید.');
+        }
+
+        $file = $request->file('file');
+
+        // بررسی نوع فایل (باید اکسل باشد)
+        if (!in_array($file->getClientOriginalExtension(), ['xls', 'xlsx', 'csv'])) {
+            return back()->with('error', 'فایل باید در فرمت اکسل باشد.');
+        }
+
+        // استفاده از کلاس `ProductsImport` برای پردازش داده‌ها
+        Excel::import(new ProductsUpdateImport, $file);
+
+        return back()->with('success', 'محصولات با موفقیت به‌روزرسانی شدند.');
+    }
 
 }

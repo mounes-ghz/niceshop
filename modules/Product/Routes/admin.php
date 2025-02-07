@@ -53,3 +53,17 @@ Route::post('products/import-from-excel', [
 ]);
 
 
+
+Route::post('products/export-selected', [
+    'as' => 'admin.products.export_selected',
+    'uses' => 'ProductController@exportSelected',
+    'middleware' => 'can:admin.products.index',
+]);
+
+Route::post('products/update-from-excel', [
+    'as' => 'admin.products.update_from_excel',
+    'uses' => 'ProductController@importProducts',
+    'middleware' => 'can:admin.products.edit',
+]);
+
+

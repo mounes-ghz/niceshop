@@ -7,14 +7,23 @@
                         <button type="button" class="btn btn-primary btn-actions btn-upload-excel" data-toggle="modal" data-target="#uploadExcelModal">
                             {{ trans('product::products.upload_excel') }}
                         </button>
+
+                    @elseif ($view === 'update_products')
+                        <button type="button" class="btn btn-warning btn-actions btn-update-excel" data-toggle="modal" data-target="#updateExcelModal">
+                         بروز رسانی
+                        </button>
+                    @elseif ($view === 'selected_products')
+                        <button type="button" class="btn btn-success btn-actions" id="export-selected">
+                           ویرایش گروهی
+                        </button>
+
                     @else
                         <a href="{{ route("admin.{$resource}.{$view}") }}" class="btn btn-primary btn-actions btn-{{ $view }}">
                             {{ trans("admin::resource.{$view}", ['resource' => $name]) }}
                         </a>
                     @endif
-
-
                 @endforeach
+
 
             @else
                 {{ $buttons ?? '' }}
@@ -50,6 +59,46 @@
 
     @push('scripts')
         <script type="module">
+            document.addEventListener("DOMContentLoaded", function () {
+                let exportButton = document.getElementById('export-selected');
+
+                if (exportButton !== null) {
+                    exportButton.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        let selectedProducts = [];
+
+                        document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+                            if (checkbox.value) {
+                                selectedProducts.push(checkbox.value);
+                            }
+                        });
+
+                        if (selectedProducts.length === 0) {
+                            alert('لطفا حداقل یک محصول را انتخاب کنید.');
+                            return;
+                        }
+
+                        let form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = "{{ route('admin.products.export_selected') }}";
+                        form.style.display = 'none';
+
+                        let csrfInput = document.createElement('input');
+                        csrfInput.name = '_token';
+                        csrfInput.value = '{{ csrf_token() }}';
+                        form.appendChild(csrfInput);
+
+                        let input = document.createElement('input');
+                        input.name = 'selected_products';
+                        input.value = selectedProducts.join(',');
+                        form.appendChild(input);
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                }
+            });
+
             @if (isset($buttons) && in_array('create', $buttons))
                 keypressAction([
                     { key: 'c', route: '{{ route("admin.{$resource}.create") }}'}
