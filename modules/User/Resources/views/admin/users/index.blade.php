@@ -19,6 +19,7 @@
             <th>{{ trans('user::users.table.first_name') }}</th>
             <th>{{ trans('user::users.table.last_name') }}</th>
             <th>{{ trans('user::users.table.email') }}</th>
+            <th>{{ trans('user::auth.phone') }}</th>
             <th>{{ trans('user::users.table.last_login') }}</th>
             <th data-sort>{{ trans('admin::admin.table.created') }}</th>
         </tr>
@@ -34,6 +35,7 @@
                 { data: 'first_name', name: 'first_name' },
                 { data: 'last_name', name: 'last_name' },
                 { data: 'email', name: 'email' },
+                { data: 'phone', name: 'phone' },
                 { data: 'last_login', name: 'last_login', searchable: false },
                 { data: 'created', name: 'created_at' },
             ]

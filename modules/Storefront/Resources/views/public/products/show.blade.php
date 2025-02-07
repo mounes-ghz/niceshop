@@ -1,16 +1,10 @@
 @extends('storefront::public.layout')
-@section('meta')
-    <meta name="product_id" content="{{ $product->id ?? '' }}">
-    <meta name="product_name" content="{{ $product->name ?? '' }}">
-    <meta name="product_price" content="{{ $product->price ?? '' }}">
-    <meta name="product_old_price" content="{{ $product->old_price ?? '' }}">
-    <meta name="availability" content="{{ $product->availability ? 'instock' : 'outofstock' }}">
-    <meta property="og:image" content="{{ $product->image_url ?? '' }}">
-@endsection
-
 @section('title', $product->name)
 
 @push('meta')
+    @php
+        $in_stock = $product->variant->isInStock()?$product->variant->isInStock():$product->isInStock();
+    @endphp
     <meta name="title" content="{{ $product->meta->meta_title ?: $product->name }}">
     <meta name="description" content="{{ $product->meta->meta_description ?: $product->short_description }}">
     <meta name="twitter:card" content="summary">
@@ -20,7 +14,12 @@
     <meta property="og:description" content="{{ $product->meta->meta_description ?: $product->short_description }}">
     <meta property="og:image" content="{{ ($product->variant && $product->variant->base_image->id) ? $product->variant->base_image?->path : $product->base_image?->path ?? asset('build/assets/image-placeholder.png') }}">
     <meta property="og:locale" content="{{ locale() }}">
-
+    <meta name="product_id" content="{{ $product->id ?? '' }}">
+    <meta name="product_name" content="{{ $product->name ?? '' }}">
+    <meta name="product_price" content="{{  $product->variant->price->amount()?? $product->price->amount() }}">
+    <meta name="product_old_price" content="{{ $product->variant->selling_price->amount() ??  $product->selling_price->amount()}}">
+    <meta name="availability" content="{{$in_stock?'instock' :'outofstock' }}">
+    <meta property="og:image" content="{{ $product->image_url ?? '' }}">
     @foreach (supported_locale_keys() as $code)
         <meta property="og:locale:alternate" content="{{ $code }}">
     @endforeach
@@ -129,6 +128,6 @@
 
 @push('scripts')
     @vite([
-        'modules/Storefront/Resources/assets/public/js/vendors/flatpickr.js'
+    'modules/Storefront/Resources/assets/public/js/vendors/flatpickr.js'
     ])
 @endpush
