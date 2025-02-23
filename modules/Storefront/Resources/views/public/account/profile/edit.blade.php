@@ -21,13 +21,12 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="form-group">
-                                <label for="email">
-                                    {{ trans('storefront::account.profile.email') }}<span>*</span>
+                                <label for="phone">
+                                    {{ trans('storefront::account.profile.phone') }}<span>*</span>
                                 </label>
 
-                                <input type="text" name="email" value="{{ old('email', $account->email) }}" id="email" class="form-control">
-
-                                @error('email')
+                                <input type="text" name="phone" value="{{ old('phone', $account->phone) }}" id="phone" class="form-control">
+                                @error('phone')
                                     <span class="error-message">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -35,13 +34,13 @@
 
                         <div class="col-md-9">
                             <div class="form-group">
-                                <label for="phone">
-                                    {{ trans('storefront::account.profile.phone') }}<span>*</span>
+                                <label for="email">
+                                    {{ trans('storefront::account.profile.email') }}
                                 </label>
 
-                                <input type="text" name="phone" value="{{ old('phone', $account->phone) }}" id="phone" class="form-control">
+                                <input type="text" name="email" value="{{ old('email', $account->email) }}" id="email" class="form-control">
 
-                                @error('phone')
+                                @error('email')
                                     <span class="error-message">{{ $message }}</span>
                                 @enderror
                             </div>

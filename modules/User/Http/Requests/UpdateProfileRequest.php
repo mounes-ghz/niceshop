@@ -23,8 +23,8 @@ class UpdateProfileRequest extends Request
     public function rules()
     {
         return [
-            'email' => ['required', Rule::unique('users')->ignore($this->email, 'email')],
-            'phone' => ['required'],
+            'email' => ['nullable', Rule::unique('users')->ignore($this->email, 'email')],
+            'phone' => ['required', Rule::unique('users')->ignore($this->phone, 'phone')],
             'first_name' => ['required'],
             'last_name' => ['required'],
             'password' => ['nullable', 'confirmed', 'min:6'],
