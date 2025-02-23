@@ -43,7 +43,7 @@ class StoreOrderRequest extends Request
     {
         return array_merge(
             [
-                'customer_email' => ['required', 'email', $this->emailUniqueRule()],
+                'customer_email' => ['nullable', 'email', $this->emailUniqueRule()],
                 'customer_phone' => ['required'],
                 'create_an_account' => 'boolean',
                 'password' => 'required_if:create_an_account,1',
