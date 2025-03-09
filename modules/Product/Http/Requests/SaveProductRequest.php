@@ -143,6 +143,9 @@ class SaveProductRequest extends Request
 
     private function getSlugRules(): array
     {
+        if (!request()->route()) {
+            return ['sometimes']; // مقدار پیش‌فرض برای جلوگیری از خطا
+        }
         $rules = $this->route()->getName() === 'admin.products.update' ? ['required'] : ['sometimes'];
 
         $slug = Product::withoutGlobalScope('active')

@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
 use Modules\Product\Entities\Product;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
